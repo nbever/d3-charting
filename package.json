@@ -1,0 +1,38 @@
+{
+  "name": "BeverBudget",
+  "version": "0.0.1",
+  "description": "Personal budget tool",
+  "author": "Nate Bever",
+  "dependencies": {
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "",
+    "html-webpack-plugin": "",
+    "babel-core": "",
+    "babel-loader": "",
+    "babel-preset-env": "",
+    "babel-preset-react": "",
+    "babel-preset-stage-1": "",
+    "babel-preset-es2016": "",
+    "babel-plugin-transform-decorators": "",
+    "babel-plugin-transform-decorators-legacy": "",
+    "react": "",
+    "react-dom": "",
+    "sass-loader": "",
+    "css-loader": "",
+    "style-loader": "",
+    "file-loader": "",
+    "node-sass": "",
+    "extract-text-webpack-plugin": "",
+    "d3": "",
+    "redux": "",
+    "react-redux": "",
+    "redux-devtools": "",
+    "react-router-dom": "",
+    "jquery": "",
+    "lodash": ""
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/webpack -d",
+    "dev": "./node_modules/.bin/webpack-dev-server --open"
+  }
+}

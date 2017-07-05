@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'flexbox';
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Arial';
+}
+
+.button {
+	padding: 12px;
+	border-radius: $border_radius;
+	background-color: $primary_color;
+	color: $primary_offset_color;
+	cursor: pointer;
+	display: inline-block;
+
+	&:hover {
+		background-color: $primary_light;
+	}
+
+	&:active {
+		background-color: $primary_dark;
+	}
+}
+
+.main {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: $light_gray;
+}
+
+.header {
+	font-size: 14px;
+	font-weight: bold;
+	color: $primary_offset_color;
+	background-color: $primary_color;
+	padding: 12px;
+	text-align: center;
+}
+
+@import 'login';

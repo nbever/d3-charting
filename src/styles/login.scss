@@ -1,0 +1,43 @@
+.login {
+	
+	text-align: center;
+	margin: auto;
+	padding-top: 48px;
+
+	.pad {
+		background-color: $dark_gray;
+		border-radius: $border_radius;
+		border: 2px solid $light_gray;
+		padding: 12px;
+		width: 198px;
+		margin: auto;
+
+		.entry-box {
+			width: 96%;
+			margin: auto;
+			border: solid 1px $primary_color;
+			background-color: black;
+			border-radius: $border_radius;
+			height: 32px;
+			margin-bottom: 12px;
+			color: white;
+			text-align: left;
+			padding: 2px;
+			line-height: 2.2;
+		}
+
+		.button-pad {
+			@include flexbox();
+			@include flex-wrap(wrap);
+		}
+
+		.button {
+			width: 58px;
+			padding-left: 0px;
+			padding-right: 0px;
+			margin: 4px;
+			border-radius: 30px;
+			font-weight: bolder;
+		}
+	}
+}

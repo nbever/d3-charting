@@ -1,10 +1,12 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {
-  BrowserRouter as Router,
-} from 'react-router-dom';
-import MainView from './main_view.js';
-import Login from './login.js';
+import Chart from './charting/base_chart.js';
+import {LineSpec, LineNature} from './charting/line_nature.js';
+import {AxisSpec, AxisNature} from './charting/axis_nature.js';
+import {DotSpec, DotNature} from './charting/dot_nature.js';
+import Header from './components/header.js';
+import ChartBlock from './components/chart_block.js';
+import {strings} from './utils/strings.js';
 
 require( './styles/base.scss' );
 
@@ -20,32 +22,117 @@ String.prototype.width = function(font) {
 }
 
 class App extends React.Component {
+
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            data: {
+                'l1': {
+                    datapoints: [
+                        {x:0, y: 123}
+                    ]
+                },
+                'l2': {
+                    datapoints: [
+                        {x:0, y: 45}
+                    ]
+                }
+            },
+            natures: [
+                new LineNature([
+                    new LineSpec({key: 'l1', color: 'green', thickness: 2.0}),
+                    new LineSpec({key: 'l2', color: 'blue'})
+                ]),
+                new DotNature([
+                    new DotSpec({key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3}),
+                    new DotSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3})
+                ]),
+                new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
+                new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4}))
+            ]
+        };
     }
 
-    getVisiblePage() {
-        if (_.isUndefined(this.state.token)) {
-            return <Login />;
+    buttonClicked() {
+        const newState = this.state;
+        const numbersToChange = Math.floor((Math.random() * 10) + 1);
+
+        const newData = {
+            'l1': {
+                datapoints: [
+                    {x:0, y: 123},
+                    {x:1, y: 100},
+                    {x:2, y: 83},
+                    {x:3, y: 185},
+                    {x:4, y: 12}
+                ]
+            },
+            'l2': {
+                datapoints: [
+                    {x:0, y: 45},
+                    {x:1, y: 72},
+                    {x:2, y: 6},
+                    {x:3, y: 111},
+                    {x:4, y: 12}
+                ]
+            }
+        };
+
+        for ( let i = 0; i < numbersToChange; i++ ) {
+            const newNum = (Math.random() * 150) + 10;
+            const whichArray = Math.floor((Math.random() * 2) + 1);
+            const whichIndex = Math.floor((Math.random() * 5));
+
+            newData['l' + whichArray].datapoints[whichIndex].y = newNum;
         }
 
-        return <MainView />;
+        newState.data = newData;
+        this.setState(newState);
+    }
+
+    addPoint() {
+        const newState = this.state;
+        const newNum = (Math.random() * 180) + 5;
+        newState.data.l2.datapoints.push({x:5, y: newNum});
+        this.setState(_.cloneDeep(newState));
+    }
+
+    setVisibility(val, key) {
+        const natures = this.state.natures;
+
+        natures.forEach( n => {
+            if (_.isArray(n.specs)){
+                n.specs.forEach( s => {
+                    if (s.getKey() == key){
+                        s.show = val;
+                    }
+                });
+            }
+            else {
+                if (n.specs.getKey() == key){
+                    n.specs.show = val;
+                }
+            }
+        });
+
+        this.setState({...this.state, natures});
     }
 
     render(){
         return (
-            <div className="main">
-                <div className="header">
-                    <div>Bever Budget</div>
+            <div>
+                <Header/>
+                <div className="chart-stack">
+                    <ChartBlock title={strings.charts.lineChart} data={this.state.data} setVisibility={(val, key) => this.setVisibility(val, key)}>
+                        <Chart padding={48} data={this.state.data} natures={this.state.natures}></Chart>
+                    </ChartBlock>
                 </div>
-                <div className="view-pane">
-                    {this.getVisiblePage()}
-                </div>
+                <div className="button" onClick={() => this.buttonClicked()}>Change Data</div>
+                <div className="button" onClick={() => this.addPoint()}>Add Point</div>
             </div>
         );
     }
 }
 
-render( <Router><App/></Router>, document.getElementById( 'app' ) );
+render( <App/>, document.getElementById( 'app' ) );

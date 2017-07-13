@@ -1,7 +1,7 @@
 {
-  "name": "BeverBudget",
+  "name": "ChartingPOC",
   "version": "0.0.1",
-  "description": "Personal budget tool",
+  "description": "Charting Proof of Concept",
   "author": "Nate Bever",
   "dependencies": {
     "webpack": "^3.0.0",
@@ -26,6 +26,7 @@
     "d3": "",
     "redux": "",
     "react-redux": "",
+    "react-localization": "",
     "redux-devtools": "",
     "react-router-dom": "",
     "jquery": "",

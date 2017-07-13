@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const extractSass = new ExtractTextPlugin("beverbudget.css");
+const extractSass = new ExtractTextPlugin("charting.css");
 
 var build_dir = path.resolve( __dirname, 'build');
 var app_dir = path.resolve( __dirname, 'src' );
@@ -14,14 +14,14 @@ var config = {
   devtool: "source-map",
   output: {
     path: build_dir,
-    filename: 'beverbudget.js'
+    filename: 'charting.js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         include: app_dir,
-        use: { 
+        use: {
           loader: 'babel-loader',
           options: {
             "presets": ["es2016", "react", "stage-1"],
@@ -35,7 +35,7 @@ var config = {
         use: extractSass.extract({
             use: [{
                 loader: "css-loader"
-              }, 
+              },
               {
                 loader: "sass-loader"
               }
@@ -52,7 +52,7 @@ var config = {
         test: /\.(jpg|png|svg|gif)$/,
         include: app_dir + '/images',
         loader: 'file-loader?name=images/[name].[ext]'
-      }        
+      }
     ]
   },
   devServer: {
@@ -63,7 +63,7 @@ var config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Bever Budget",
+      title: "Charting POC",
       template: app_dir + '/index.html.ejs'
     }),
     new webpack.ProvidePlugin({

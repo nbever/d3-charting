@@ -1,0 +1,47 @@
+.chart-block {
+
+  padding: 12px;
+  background-color: $primary_color;
+  color: $primary_offset_color;
+  border-radius: $border_radius;
+  height: 500px;
+  position: relative;
+  margin: 12px;
+
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: $primary_offset_color;
+  }
+
+  .container {
+    @include flexbox();
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 8px;
+    right: 8px;
+
+    .toggles {
+      background-color: $primary_offset_color;
+      border-radius: $border_radius;
+      padding: 12px;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      overflow: auto;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .chart {
+      padding: 8px;
+      margin: 12px;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      background-color: white;
+      border-radius: $border_radius;
+      @include flex-grow(1);
+    }
+  }
+}

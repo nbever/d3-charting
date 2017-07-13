@@ -3,7 +3,7 @@ export default class DrawSpec {
 	constructor(props) {
 
 		if (_.isUndefined(props.key)) {
-			throw 'Now key property was defined';
+			throw 'No key property was defined';
 		}
 
 		this.props = props;
@@ -11,4 +11,18 @@ export default class DrawSpec {
 			return this.props.key;
 		}
 	}
+
+  getValue(value, defaultValue, typeFx = _.isString) {
+    const rtn = (_.isUndefined(value) || !typeFx(value)) ? defaultValue : value;
+    return rtn;
+  }
+
+  get show() {
+    const showIt = _.isUndefined(this.props.show) || !_.isBoolean(this.props.show) ? true : this.props.show;
+    return showIt;
+  }
+
+  set show(val) {
+    this.props.show = val;
+  }
 }

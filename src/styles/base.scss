@@ -1,10 +1,15 @@
 @import 'variables';
 @import 'flexbox';
+@import 'fonts/bb';
 
 body {
 	margin: 0px;
 	padding: 0px;
 	font-family: 'Arial';
+}
+
+div {
+	color: $primary_color;
 }
 
 .button {
@@ -33,13 +38,7 @@ body {
 	background-color: $light_gray;
 }
 
-.header {
-	font-size: 14px;
-	font-weight: bold;
-	color: $primary_offset_color;
-	background-color: $primary_color;
-	padding: 12px;
-	text-align: center;
-}
-
-@import 'login';
+@import '../components/header';
+@import '../components/chart_block';
+@import '../components/title_toggle';
+@import '../components/checkbox/checkbox';

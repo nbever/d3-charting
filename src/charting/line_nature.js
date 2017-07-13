@@ -3,8 +3,8 @@ import Nature from './nature.js';
 import DrawSpec from './draw_spec.js';
 
 class LineNature extends Nature{
-	
-	initializeLines(svg, scaleInfo, series, spec) {
+
+	initialize(svg, chartInfo, series) {
 		this.lineGroup = svg.append('g').attr('class', 'line_nature');
 		const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
 			.append('g')
@@ -12,7 +12,7 @@ class LineNature extends Nature{
 		lines.append('path')
 			.attr('class', 'line_nature_path')
 			.attr('d', (d,i) => {
-				return this.getLineMethod(scaleInfo)(d.datapoints)
+				return this.getLineMethod(chartInfo)(d.datapoints)
 			})
 			.attr('stroke', (d, i) => {
 				return this.specs[i].color;
@@ -24,34 +24,38 @@ class LineNature extends Nature{
 
 	}
 
-	draw(svg, scaleInfo, series) {
+	draw(svg, chartInfo, series) {
 		if (_.isUndefined(this.lineGroup)) {
-			this.initializeLines(svg, scaleInfo, series);
+			this.initialize(svg, chartInfo, series);
 		}
 
 		this.lineGroup.selectAll('.line_nature_path')
 			.data(series[0])
 			.transition()
-			.attr('d', (d, i) => this.getLineMethod(scaleInfo)(d.datapoints));
+			.attr('d', (d, i) => {
+				if (this.specs[i].show === false) {
+					return;
+				}
+
+				return this.getLineMethod(chartInfo)(d.datapoints)
+			});
 	}
 
-	getLineMethod( scaleInfo) {
+	getLineMethod( chartInfo ) {
 		return d3.line()
-			.x(d => scaleInfo.x(d.x))
-			.y(d => scaleInfo.y(d.y));
+			.x(d => chartInfo.scales.x(d.x))
+			.y(d => chartInfo.scales.y(d.y));
 	}
 }
 
 class LineSpec extends DrawSpec{
 
 	get color() {
-		const color = _.isUndefined(this.props.color) ? 'black' : this.props.color;
-		return color;
+		return this.getValue(this.props.color, 'black', _.isString);
 	}
 
 	get thickness() {
-		const thickness = _.isUndefined(this.props.thickness) ? 1.0 : this.props.thickness;
-		return thickness;
+		return this.getValue(this.props.thickness, 1.0, _.isNumber);
 	}
 }
 

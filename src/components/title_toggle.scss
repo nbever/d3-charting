@@ -1,0 +1,7 @@
+.title-toggle {
+  @include flexbox();
+
+  .checkbox {
+    margin-right: 8px;
+  }
+}

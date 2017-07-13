@@ -16,6 +16,8 @@ class DotNature extends Nature {
 
     dots.selectAll('.dot').data( d => d.datapoints).enter()
       .append('circle')
+      .on('mouseover', (d,i,nodes) => {
+      })
       .attr('class', 'dot');
   }
 

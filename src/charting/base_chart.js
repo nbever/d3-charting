@@ -61,34 +61,38 @@ class Chart extends React.Component {
 		const xScales = this.computeDomain();
 		const yScales = this.computeRange();
 
-		const chartInfo = new ChartInfo({min: this.xRange[0], max: this.xRange[1]},
+		const chartInfo = new ChartInfo(
+			{min: this.xRange[0], max: this.xRange[1]},
 			{min: this.yRange[1], max: this.yRange[0]},
-			{x: xScales.x, y: yScales.y});
+			{x: xScales.x, y: yScales.y, yScales, xScales});
 
 		return chartInfo;
 	}
 
 	computeDomain() {
-		const xScales = this.computeScales(d => d.x, this.xRange);
+		const xScales = this.computeScales(d => d.x, this.xRange, this.props.domainPadding);
 		xScales.x = xScales.full;
 		delete xScales.full;
 		return xScales;
 	}
 
 	computeRange() {
-		const yScales = this.computeScales(d => d.y, this.yRange);
+		const yScales = this.computeScales(d => d.y, this.yRange, this.props.rangePadding);
 		yScales.y = yScales.full;
 		delete yScales.full;
 		return yScales;
 	}
 
-	computeScales(mapFunction, range) {
+	computeScales(mapFunction, range, scalePadding) {
 		let min = Number.MAX_VALUE;
 		let max = Number.MIN_VALUE;
 		const scales = {};
 
 		for( let key in this.props.data) {
 			const sub_range = d3.extent(this.props.data[key].datapoints.map(mapFunction));
+			const padAmount = (sub_range[1] - sub_range[0]) * (scalePadding/100.0);
+			sub_range[0] = sub_range[0] - padAmount;
+			sub_range[1] = sub_range[1] + padAmount;
 			scales[key] = d3.scaleLinear().domain(sub_range).range(range);
 			min = Math.min(min, sub_range[0]);
 			max = Math.max(max, sub_range[1]);
@@ -134,12 +138,16 @@ class Chart extends React.Component {
 Chart.propTypes = {
 	padding: PropTypes.number,
 	data: PropTypes.object,
-	natures: PropTypes.array
+	natures: PropTypes.array,
+	domainPadding: PropTypes.number,
+	rangePadding: PropTypes.number
 };
 
 Chart.defaultProps = {
 	padding: 8,
-	natures: []
+	natures: [],
+	domainPadding: 0,
+	rangePadding: 0
 };
 
 export default Chart;

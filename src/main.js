@@ -4,6 +4,7 @@ import Chart from './charting/base_chart.js';
 import {LineSpec, LineNature} from './charting/line_nature.js';
 import {AxisSpec, AxisNature} from './charting/axis_nature.js';
 import {DotSpec, DotNature} from './charting/dot_nature.js';
+import {BarNature, BarSpec} from './charting/bar_nature.js';
 import Header from './components/header.js';
 import ChartBlock from './components/chart_block.js';
 import {strings} from './utils/strings.js';
@@ -30,12 +31,10 @@ class App extends React.Component {
             data: {
                 'l1': {
                     datapoints: [
-                        {x:0, y: 123}
                     ]
                 },
                 'l2': {
                     datapoints: [
-                        {x:0, y: 45}
                     ]
                 }
             },
@@ -47,6 +46,9 @@ class App extends React.Component {
                 new DotNature([
                     new DotSpec({key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3}),
                     new DotSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3})
+                ]),
+                new BarNature([
+                    new BarSpec({key: 'l1', strokeWidth: 2, stroke: 'black', fill: 'yellow', opacity: 0.1, barWidth: 10})
                 ]),
                 new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
                 new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4}))
@@ -125,7 +127,7 @@ class App extends React.Component {
                 <Header/>
                 <div className="chart-stack">
                     <ChartBlock title={strings.charts.lineChart} data={this.state.data} setVisibility={(val, key) => this.setVisibility(val, key)}>
-                        <Chart padding={48} data={this.state.data} natures={this.state.natures}></Chart>
+                        <Chart domainPadding={5} padding={48} data={this.state.data} natures={this.state.natures}></Chart>
                     </ChartBlock>
                 </div>
                 <div className="button" onClick={() => this.buttonClicked()}>Change Data</div>

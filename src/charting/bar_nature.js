@@ -76,7 +76,8 @@ class BarNature extends Nature {
         return this.getYCoord(d, i, nodes, chartInfo);
       })
       .attr('fill', (d,i,nodes) => this.getSpecFromChild(nodes[0]).fill)
-      .attr('fill-opacity', (d,i,nodes) => this.getSpecFromChild(nodes[0]).opacity);
+      .attr('fill-opacity', (d,i,nodes) => this.getSpecFromChild(nodes[0]).opacity)
+      .attr('cursor', (d, i, nodes) => this.getSpecFromChild(nodes[0]).cursor);
 
     this.barGroup.selectAll('.bar_group')
       .data(series[0])

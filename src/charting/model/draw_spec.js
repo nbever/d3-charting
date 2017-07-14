@@ -29,4 +29,8 @@ export default class DrawSpec {
   get useGlobalScale() {
     return this.getValue(this.props.useGlobalScale, true, _.isBoolean);
   }
+
+  get cursor() {
+    return this.getValue(this.props.cursor, 'auto', _.isString);
+  }
 }

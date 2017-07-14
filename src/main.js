@@ -4,7 +4,8 @@ import Chart from './charting/base_chart.js';
 import {LineSpec, LineNature} from './charting/line_nature.js';
 import {AxisSpec, AxisNature} from './charting/axis_nature.js';
 import {HoverAxisNature} from './charting/hover_axis_nature.js';
-import {DotSpec, DotNature} from './charting/dot_nature.js';
+import {DotNature} from './charting/dot_nature.js';
+import {PointSpec} from './charting/model/point_nature.js';
 import {BarNature, BarSpec} from './charting/bar_nature.js';
 import Header from './components/header.js';
 import ChartBlock from './components/chart_block.js';
@@ -44,15 +45,16 @@ class App extends React.Component {
             },
             natures: [
                 new BarNature([
-                    new BarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'yellow', opacity: 0.4, barWidth: 10, useGlobalScale: false})
+                    new BarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'yellow', opacity: 0.4,
+                        barWidth: 10, useGlobalScale: false, cursor: 'pointer'})
                 ]),
                 new LineNature([
                     new LineSpec({key: 'l1', color: 'green', thickness: 2.0}),
                     new LineSpec({key: 'l2', color: 'blue'})
                 ]),
                 new DotNature([
-                    new DotSpec({key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3}),
-                    new DotSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3})
+                    new PointSpec({key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer'}),
+                    new PointSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3, cursor: 'pointer'})
                 ]),
                 // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
                 new HoverAxisNature(new AxisSpec({key: '', position: 'left', ticks: 1, useGlobalScale: false,

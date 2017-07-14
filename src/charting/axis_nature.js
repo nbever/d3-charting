@@ -29,6 +29,7 @@ class AxisNature extends Nature {
     }
 
     this.axis.tickFormat(this.specs.labelFunction);
+    this.axis.tickSizeOuter(this.specs.tickSizeOuter);
 
     if (!_.isUndefined(this.specs.ticks)) {
       this.axis.ticks(this.specs.ticks);
@@ -67,21 +68,28 @@ class AxisNature extends Nature {
   }
 
   setAxisStyles() {
+
+    const stroke = this.getStroke();
+
     this.axisGroup.selectAll('path')
       .attr('stroke', d => {
-        return this.specs.stroke;
+        return this.getStroke();
       })
       .attr('stroke-dasharray', this.specs.strokeDashArray);
 
     this.axisGroup.selectAll('line')
       .attr('stroke', d => {
-        return this.specs.stroke;
+        return this.getStroke();
       });
 
     this.axisGroup.selectAll('text')
       .attr('fill', d => {
-        return this.specs.stroke;
+        return this.getStroke();
       });
+  }
+
+  getStroke() {
+    return this.specs.stroke;
   }
 
   draw(svg, chartInfo, series) {
@@ -127,6 +135,10 @@ class AxisSpec extends DrawSpec {
 
   get strokeDashArray() {
     return this.getValue(this.props.strokeDashArray, '', _.isString);
+  }
+
+  get tickSizeOuter() {
+    return this.getValue(this.props.tickSizeOuter, 6, _.isNumber);
   }
 }
 

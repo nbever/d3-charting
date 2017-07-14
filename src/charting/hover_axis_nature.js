@@ -11,9 +11,9 @@ class HoverAxisNature extends AxisNature {
 		this.svg = svg;
 	}
 
-	handleEvent(chartEvent) {
+	handleEvent(chartEvent, chartInfo) {
 		if (chartEvent.eventType === 'mouseover') {
-			this.showAxis(chartEvent.chartInfo, chartEvent.drawSpec);
+			this.showAxis(chartInfo, chartEvent.drawSpec);
     	}
     	else if (chartEvent.eventType === 'mouseout') {
     		this.hideAxis();
@@ -36,10 +36,20 @@ class HoverAxisNature extends AxisNature {
 		return chartInfo.scales.xScales[this.seriesKey];
 	}
 
+	getStroke() {
+		if (_.isUndefined(this.specs.props.stroke)) {
+			return this.hoverSpec.fill;
+		}
+
+		return this.specs.stroke;
+	}
+
 	showAxis(chartInfo, spec) {
 		if (_.isUndefined(this.axisGroup)) {
 			this.initialize(this.svg, chartInfo);
 		}
+
+		this.hoverSpec = spec;
 		this.seriesKey = spec.getKey();
 		this.useGlobalScale = spec.useGlobalScale;
 		this.createAxisFunction(chartInfo);

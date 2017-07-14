@@ -67,6 +67,7 @@ class Chart extends React.Component {
 			{yScales, xScales},
 			this.eventHandler.bind(this));
 
+		this.chartInfo = chartInfo;
 		return chartInfo;
 	}
 
@@ -124,6 +125,14 @@ class Chart extends React.Component {
 		return this._yRange;
 	}
 
+	get chartInfo() {
+		return this._chartInfo;
+	}
+
+	set chartInfo(chartInfo) {
+		this._chartInfo = chartInfo;
+	}
+
 	componentDidUpdate() {
 		const chartInfo = this.buildScales(false);
 		this.drawNatures(this.state.svg, chartInfo, this.props.data);
@@ -132,7 +141,7 @@ class Chart extends React.Component {
 	eventHandler(chartEvent) {
 		this.props.natures.forEach(n => {
 			if (_.isFunction(n.handleEvent)) {
-				n.handleEvent(chartEvent);
+				n.handleEvent(chartEvent, this.chartInfo);
 			}
 		})
 	}

@@ -37,11 +37,14 @@ class App extends React.Component {
                 'l2': {
                     datapoints: [
                     ]
+                },
+                'l3': {
+                    datapoints: []
                 }
             },
             natures: [
                 new BarNature([
-                    new BarSpec({key: 'l1', strokeWidth: 2, stroke: 'black', fill: 'yellow', opacity: 0.4, barWidth: 10, useGlobalScale: false})
+                    new BarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'yellow', opacity: 0.4, barWidth: 10, useGlobalScale: false})
                 ]),
                 new LineNature([
                     new LineSpec({key: 'l1', color: 'green', thickness: 2.0}),
@@ -53,8 +56,9 @@ class App extends React.Component {
                 ]),
                 // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
                 new HoverAxisNature(new AxisSpec({key: '', position: 'left', ticks: 1, useGlobalScale: false,
-                    stroke: 'blue', tickValues: AxisSpec.MAX_ONLY, strokeDashArray: '8,4'})),
-                new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4, stroke: 'green'}))
+                    tickValues: AxisSpec.MAX_ONLY, strokeDashArray: '8,4',
+                    labelFunction: (tick) => parseInt(tick).toFixed(2)})),
+                new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0}))
             ]
         };
     }
@@ -81,12 +85,28 @@ class App extends React.Component {
                     {x:3, y: 111},
                     {x:4, y: 12}
                 ]
+            },
+            'l3': {
+                datapoints: [
+                    {x:0, y: 1.32},
+                    {x:1, y: 24.123242},
+                    {x:2, y: 62.12},
+                    {x:3, y: 0.432},
+                    {x:4, y: 10},
+                ]
             }
         };
 
         for ( let i = 0; i < numbersToChange; i++ ) {
-            const newNum = (Math.random() * 150) + 10;
-            const whichArray = Math.floor((Math.random() * 2) + 1);
+            const whichArray = Math.floor((Math.random() * 3) + 1);
+
+            let range = [10, 150];
+
+            if (whichArray === 3) {
+                range = [0, 75];
+            }
+
+            const newNum = (Math.random() * range[1]) + range[0];
             const whichIndex = Math.floor((Math.random() * 5));
 
             newData['l' + whichArray].datapoints[whichIndex].y = newNum;

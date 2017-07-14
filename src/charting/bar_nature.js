@@ -23,10 +23,12 @@ class BarNature extends Nature {
       .enter()
       .append('rect')
       .on('mouseover', (d, i, nodes) => {
-        chartInfo.fireEvent( new ChartEvent('mouseover', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+        const spec = this.getSpecFromChild(nodes[0]);
+        chartInfo.fireEvent( new ChartEvent('mouseover', d, spec, chartInfo));
       })
       .on('mouseout', (d, i, nodes) => {
-        chartInfo.fireEvent( new ChartEvent('mouseout', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+        const spec = this.getSpecFromChild(nodes[0]);
+        chartInfo.fireEvent( new ChartEvent('mouseout', d, spec, chartInfo));
       })
       .attr('class', 'bar');
   }

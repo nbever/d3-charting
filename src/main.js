@@ -52,8 +52,9 @@ class App extends React.Component {
                     new DotSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3})
                 ]),
                 // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
-                new HoverAxisNature(new AxisSpec({key: '', position: 'left', ticks: 3, useGlobalScale: false})),
-                new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4}))
+                new HoverAxisNature(new AxisSpec({key: '', position: 'left', ticks: 1, useGlobalScale: false,
+                    stroke: 'blue', tickValues: AxisSpec.MAX_ONLY, strokeDashArray: '8,4'})),
+                new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4, stroke: 'green'}))
             ]
         };
     }

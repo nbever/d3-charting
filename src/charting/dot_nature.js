@@ -18,10 +18,12 @@ class DotNature extends Nature {
     dots.selectAll('.dot').data( d => d.datapoints).enter()
       .append('circle')
       .on('mouseover', (d,i,nodes) => {
-        chartInfo.fireEvent( new ChartEvent('mouseover', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+        const spec = this.getSpecFromChild(nodes[0]);
+        chartInfo.fireEvent( new ChartEvent('mouseover', d, spec, chartInfo));
       })
       .on('mouseout', (d, i, nodes) => {
-        chartInfo.fireEvent( new ChartEvent('mouseout', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+        const spec = this.getSpecFromChild(nodes[0]);
+        chartInfo.fireEvent( new ChartEvent('mouseout', d, spec, chartInfo));
       })
       .attr('class', 'dot');
   }

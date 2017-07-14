@@ -1,9 +1,9 @@
 class ChartEvent {
-	
-	constructor(eventType, data, seriesKey, chartInfo){
+
+	constructor(eventType, data, drawSpec, chartInfo){
 		this._eventType = eventType;
 		this._data = data;
-		this._seriesKey = seriesKey;
+		this._drawSpec = drawSpec;
 		this._chartInfo = chartInfo;
 	}
 
@@ -15,8 +15,8 @@ class ChartEvent {
 		return this._data;
 	}
 
-	get seriesKey() {
-		return this._seriesKey;
+	get drawSpec() {
+		return this._drawSpec;
 	}
 
 	get chartInfo() {

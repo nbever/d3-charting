@@ -13,7 +13,7 @@ class HoverAxisNature extends AxisNature {
 
 	handleEvent(chartEvent) {
 		if (chartEvent.eventType === 'mouseover') {
-			this.showAxis(chartEvent.chartInfo, chartEvent.seriesKey);
+			this.showAxis(chartEvent.chartInfo, chartEvent.drawSpec);
     	}
     	else if (chartEvent.eventType === 'mouseout') {
     		this.hideAxis();
@@ -21,7 +21,7 @@ class HoverAxisNature extends AxisNature {
 	}
 
 	getYScale(spec, chartInfo) {
-		if (spec.useGlobalScale === true) {
+		if (this.useGlobalScale === true) {
 			return chartInfo.scales.yScales.y;
 		}
 
@@ -29,21 +29,23 @@ class HoverAxisNature extends AxisNature {
 	}
 
 	getXScale(spec, chartInfo) {
-		if (spec.useGlobalScale === true) {
+		if (this.useGlobalScale === true) {
 			return chartInfo.scales.xScales.x;
 		}
 
 		return chartInfo.scales.xScales[this.seriesKey];
 	}
 
-	showAxis(chartInfo, key) {
+	showAxis(chartInfo, spec) {
 		if (_.isUndefined(this.axisGroup)) {
 			this.initialize(this.svg, chartInfo);
 		}
-		this.seriesKey = key;
+		this.seriesKey = spec.getKey();
+		this.useGlobalScale = spec.useGlobalScale;
 		this.createAxisFunction(chartInfo);
 		this.setAxisScale(chartInfo);
-    	this.axisGroup.call(this.axis);
+    this.axisGroup.call(this.axis);
+    this.setAxisStyles();
 	}
 
 	hideAxis(){

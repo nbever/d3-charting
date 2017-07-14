@@ -25,4 +25,8 @@ export default class DrawSpec {
   set show(val) {
     this.props.show = val;
   }
+
+  get useGlobalScale() {
+    return this.getValue(this.props.useGlobalScale, true, _.isBoolean);
+  }
 }

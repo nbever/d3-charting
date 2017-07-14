@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
-import Nature from './nature.js';
-import DrawSpec from './draw_spec.js';
+import Nature from './model/nature.js';
+import DrawSpec from './model/draw_spec.js';
+import ChartEvent from './model/chart_event.js';
 
 class DotNature extends Nature {
 
@@ -17,6 +18,10 @@ class DotNature extends Nature {
     dots.selectAll('.dot').data( d => d.datapoints).enter()
       .append('circle')
       .on('mouseover', (d,i,nodes) => {
+        chartInfo.fireEvent( new ChartEvent('mouseover', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+      })
+      .on('mouseout', (d, i, nodes) => {
+        chartInfo.fireEvent( new ChartEvent('mouseout', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
       })
       .attr('class', 'dot');
   }
@@ -47,10 +52,14 @@ class DotNature extends Nature {
       .selectAll('.dot')
       .data(d => d.datapoints)
       .transition()
-      .attr('cx', d => {
-        return chartInfo.scales.x(d.x);
+      .attr('cx', (d, i, nodes) => {
+        const spec = this.getSpecFromChild(nodes[0]);
+        return this.getXScale(spec, chartInfo)(d.x);
       })
-      .attr('cy', d => chartInfo.scales.y(d.y))
+      .attr('cy', (d, i, nodes) => {
+        const spec = this.getSpecFromChild(nodes[0]);
+        return this.getYScale(spec, chartInfo)(d.y)
+      })
       .attr('stroke', (d,i,nodes) => this.getSpecFromChild(nodes[0]).stroke)
       .attr('stroke-width', (d,i,nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
       .attr('fill', (d,i,nodes) => this.getSpecFromChild(nodes[0]).fill)

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import Nature from './nature.js';
-import ChartInfo from './chart_info.js';
+import Nature from './model/nature.js';
+import ChartInfo from './model/chart_info.js';
 
 class Chart extends React.Component {
 
@@ -64,7 +64,8 @@ class Chart extends React.Component {
 		const chartInfo = new ChartInfo(
 			{min: this.xRange[0], max: this.xRange[1]},
 			{min: this.yRange[1], max: this.yRange[0]},
-			{x: xScales.x, y: yScales.y, yScales, xScales});
+			{yScales, xScales},
+			this.eventHandler.bind(this));
 
 		return chartInfo;
 	}
@@ -126,6 +127,14 @@ class Chart extends React.Component {
 	componentDidUpdate() {
 		const chartInfo = this.buildScales(false);
 		this.drawNatures(this.state.svg, chartInfo, this.props.data);
+	}
+
+	eventHandler(chartEvent) {
+		this.props.natures.forEach(n => {
+			if (_.isFunction(n.handleEvent)) {
+				n.handleEvent(chartEvent);
+			}
+		})
 	}
 
 	render() {

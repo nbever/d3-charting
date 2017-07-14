@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Chart from './charting/base_chart.js';
 import {LineSpec, LineNature} from './charting/line_nature.js';
 import {AxisSpec, AxisNature} from './charting/axis_nature.js';
+import {HoverAxisNature} from './charting/hover_axis_nature.js';
 import {DotSpec, DotNature} from './charting/dot_nature.js';
 import {BarNature, BarSpec} from './charting/bar_nature.js';
 import Header from './components/header.js';
@@ -39,6 +40,9 @@ class App extends React.Component {
                 }
             },
             natures: [
+                new BarNature([
+                    new BarSpec({key: 'l1', strokeWidth: 2, stroke: 'black', fill: 'yellow', opacity: 0.4, barWidth: 10, useGlobalScale: false})
+                ]),
                 new LineNature([
                     new LineSpec({key: 'l1', color: 'green', thickness: 2.0}),
                     new LineSpec({key: 'l2', color: 'blue'})
@@ -47,10 +51,8 @@ class App extends React.Component {
                     new DotSpec({key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3}),
                     new DotSpec({key: 'l2', stroke: 'green', fill: 'green', radius: 3})
                 ]),
-                new BarNature([
-                    new BarSpec({key: 'l1', strokeWidth: 2, stroke: 'black', fill: 'yellow', opacity: 0.1, barWidth: 10})
-                ]),
-                new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
+                // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
+                new HoverAxisNature(new AxisSpec({key: '', position: 'left', ticks: 3, useGlobalScale: false})),
                 new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4}))
             ]
         };

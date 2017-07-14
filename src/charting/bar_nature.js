@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
-import Nature from './nature.js';
-import DrawSpec from './draw_spec.js';
+import Nature from './model/nature.js';
+import DrawSpec from './model/draw_spec.js';
+import ChartEvent from './model/chart_event.js';
 
 class BarNature extends Nature {
 
@@ -21,6 +22,12 @@ class BarNature extends Nature {
       .data( d => d.datapoints)
       .enter()
       .append('rect')
+      .on('mouseover', (d, i, nodes) => {
+        chartInfo.fireEvent( new ChartEvent('mouseover', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+      })
+      .on('mouseout', (d, i, nodes) => {
+        chartInfo.fireEvent( new ChartEvent('mouseout', d, this.getSpecFromChild(nodes[0]).getKey(), chartInfo));
+      })
       .attr('class', 'bar');
   }
 
@@ -51,13 +58,20 @@ class BarNature extends Nature {
         const percWidth = this.getSpecFromChild(nodes[0]).barWidth;
         return Math.floor(maxBarWidth * (percWidth/100.0));
       })
-      .attr('height', d => chartInfo.yRange.max - chartInfo.scales.y(d.y) )
-      .attr('x', (d, i, nodes) => {
-        const percWidth = this.getSpecFromChild(nodes[0]).barWidth;
-        const realWidth = Math.floor(maxBarWidth * (percWidth/100.0));
-        return chartInfo.scales.x(d.x) - (realWidth/2);
+      .attr('height', (d, i, nodes) => {
+        const spec = this.getSpecFromChild(nodes[0]);
+        return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
       })
-      .attr('y', d => chartInfo.scales.y(d.y))
+      .attr('x', (d, i, nodes) => {
+        const spec = this.getSpecFromChild(nodes[0]);
+        const percWidth = spec.barWidth;
+        const realWidth = Math.floor(maxBarWidth * (percWidth/100.0));
+        return this.getXScale(spec, chartInfo)(d.x) - (realWidth/2);
+      })
+      .attr('y', (d, i, nodes) => {
+        const spec = this.getSpecFromChild(nodes[0]);
+        return this.getYScale(spec, chartInfo)(d.y)
+      })
       .attr('stroke-width', (d,i,nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
       .attr('fill', (d,i,nodes) => this.getSpecFromChild(nodes[0]).fill)
       .attr('fill-opacity', (d,i,nodes) => this.getSpecFromChild(nodes[0]).opacity);

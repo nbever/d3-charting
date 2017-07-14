@@ -1,9 +1,10 @@
 export default class ChartInfo {
 
-  constructor(xRange, yRange, scales) {
+  constructor(xRange, yRange, scales, eventHandler) {
     this._xRange = xRange;
     this._yRange = yRange;
     this._scaleObj = scales;
+    this._eventHandler = eventHandler;
   }
 
   get scales() {
@@ -16,5 +17,9 @@ export default class ChartInfo {
 
   get yRange() {
     return this._yRange;
+  }
+
+  get fireEvent() {
+    return this._eventHandler;
   }
 }

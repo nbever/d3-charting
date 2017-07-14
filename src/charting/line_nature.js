@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-import Nature from './nature.js';
-import DrawSpec from './draw_spec.js';
+import Nature from './model/nature.js';
+import DrawSpec from './model/draw_spec.js';
 
 class LineNature extends Nature{
 
@@ -37,14 +37,14 @@ class LineNature extends Nature{
 					return;
 				}
 
-				return this.getLineMethod(chartInfo)(d.datapoints)
+				return this.getLineMethod(this.specs[i], chartInfo)(d.datapoints)
 			});
 	}
 
-	getLineMethod( chartInfo ) {
+	getLineMethod( spec, chartInfo ) {
 		return d3.line()
-			.x(d => chartInfo.scales.x(d.x))
-			.y(d => chartInfo.scales.y(d.y));
+			.x(d => this.getXScale(spec, chartInfo)(d.x))
+			.y(d => this.getYScale(spec, chartInfo)(d.y));
 	}
 }
 

@@ -1,7 +1,7 @@
 const webpack = require( 'webpack' );
 const path = require( 'path' );
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const extractSass = new ExtractTextPlugin("charting.css");
@@ -24,7 +24,7 @@ var config = {
         use: {
           loader: 'babel-loader',
           options: {
-            "presets": ["es2016", "react", "stage-1"],
+            "presets": ["es2015", "react", "stage-1"],
             "plugins": ["transform-decorators-legacy"]
           }
         }
@@ -71,7 +71,8 @@ var config = {
       _: 'lodash',
       jQuery: 'jquery'
     }),
-    extractSass
+    extractSass,
+    new UglifyJSPlugin()
   ]
 }
 

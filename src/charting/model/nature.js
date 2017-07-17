@@ -18,7 +18,7 @@ export default class Nature {
 	draw(svg, scaleInfo, series) {
 		throw 'Method not implemented';
 	}
-	
+
 	getXScale(spec, chartInfo) {
 		if (spec.useGlobalScale === true) {
 		return chartInfo.scales.xScales.x;
@@ -32,6 +32,6 @@ export default class Nature {
 			return chartInfo.scales.yScales.y;
 		}
 
-		return chartInfo.scales.yScales[spec.getKey()]; 
-  	}
+		return chartInfo.scales.yScales[spec.getKey()];
+  }
 }

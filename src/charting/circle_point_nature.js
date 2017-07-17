@@ -1,10 +1,8 @@
 import * as d3 from 'd3';
 import Nature from './model/point_nature.js';
-import DrawSpec from './model/draw_spec.js';
-import ChartEvent from './model/chart_event.js';
 import {PointNature} from './model/point_nature.js';
 
-class DotNature extends PointNature {
+class CirclePointNature extends PointNature {
 
   getNatureName() {
     return 'dot';
@@ -32,4 +30,4 @@ class DotNature extends PointNature {
 
 }
 
-export {DotNature};
+export {CirclePointNature};

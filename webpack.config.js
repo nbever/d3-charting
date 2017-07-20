@@ -8,6 +8,8 @@ const extractSass = new ExtractTextPlugin( "charting.css" );
 
 var build_dir = path.resolve( __dirname, 'build' );
 var app_dir = path.resolve( __dirname, 'src' );
+var test_dir = path.resolve( __dirname, 'tests' );
+
 
 var config = {
   entry: app_dir + '/main.js',
@@ -20,6 +22,17 @@ var config = {
     rules: [ {
         test: /\.js$/,
         include: app_dir,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            "presets": [ "es2015", "react", "stage-1" ],
+            "plugins": [ "transform-decorators-legacy" ]
+          }
+        }
+      },
+      {
+        test: /\.js$/,
+        include: test_dir,
         use: {
           loader: 'babel-loader',
           options: {
@@ -51,12 +64,8 @@ var config = {
         test: /\.(jpg|png|svg|gif)$/,
         include: app_dir + '/images',
         loader: 'file-loader?name=images/[name].[ext]'
-      },
-      {
-      test: /tests\.js$/,
-      use: 'mocha-loader',
-      exclude: /node_modules/,
-    }
+      }
+      
     ]
   },
   devServer: {

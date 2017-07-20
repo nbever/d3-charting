@@ -71,8 +71,7 @@ var config = {
       _: 'lodash',
       jQuery: 'jquery'
     }),
-    extractSass,
-    new UglifyJSPlugin()
+    extractSass
   ]
 }
 

@@ -65,7 +65,8 @@ class Chart extends React.Component {
 			{min: this.xRange[0], max: this.xRange[1]},
 			{min: this.yRange[1], max: this.yRange[0]},
 			{yScales, xScales},
-			this.eventHandler.bind(this));
+			this.eventHandler.bind(this),
+			this.props.padding);
 
 		this.chartInfo = chartInfo;
 		return chartInfo;

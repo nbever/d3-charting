@@ -8,6 +8,7 @@ import {CirclePointNature} from './charting/circle_point_nature.js';
 import {TrianglePointNature} from './charting/triangle_point_nature.js';
 import {PointSpec} from './charting/model/point_nature.js';
 import {BarNature, BarSpec} from './charting/bar_nature.js';
+import {StackedBarNature, StackedBarSpec} from './charting/stacked_bar_nature.js';
 import Header from './components/header.js';
 import ChartBlock from './components/chart_block.js';
 import {strings} from './utils/strings.js';
@@ -45,9 +46,15 @@ class App extends React.Component {
                 }
             },
             natures: [
-                new BarNature([
-                    new BarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'yellow', opacity: 0.4,
-                        barWidth: 10, useGlobalScale: false, cursor: 'pointer'})
+                // new BarNature([
+                //     new BarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'yellow', opacity: 0.4,
+                //         barWidth: 10, useGlobalScale: false, cursor: 'pointer'})
+                // ]),
+                new StackedBarNature([
+                    new StackedBarSpec({key: 'l3', strokeWidth: 2, stroke: 'purple', fill: 'darkgreen', opacity: 0.4,
+                        barWidth: 10, cursor: 'pointer'}),
+                    new StackedBarSpec({key: 'l2', strokeWidth: 2, stroke: 'black', fill: 'red', opacity: 0.4,
+                        barWidth: 10, cursor: 'pointer'})
                 ]),
                 new LineNature([
                     new LineSpec({key: 'l1', color: 'green', thickness: 2.0}),

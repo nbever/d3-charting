@@ -61,7 +61,7 @@ class BarNature extends Nature {
         return 'visible';
       })
       .selectAll('.bar')
-      .data( d => d.datapoints)
+      .data( d => d.datapoints )
       .transition()
       .attr('width', (d, i, nodes) => {
         return this.getWidth(d, i, nodes, maxBarWidth);
@@ -115,7 +115,7 @@ class BarNature extends Nature {
 
   getYCoord(d, i, nodes, chartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
-    return this.getYScale(spec, chartInfo)(d.y)
+    return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
   }
 
   getWidth(d, i, nodes, maxBarWidth) {
@@ -125,12 +125,14 @@ class BarNature extends Nature {
 
   getHeight(d, i, nodes, chartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
-    return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
+    const y0 = _.isUndefined(d.y0) ? 0 : d.y0;
+    return this.getYScale(spec, chartInfo)(d.y) -
+      this.getYScale(spec, chartInfo)(d.y0);
   }
 
   calculateBarWidth(chartInfo, series) {
     const points = series[0].reduce((total,s) => {
-      return total + s.datapoints.length;
+      return Math.max(total, s.datapoints.length);
     }, 0);
 
     return Math.floor((chartInfo.xRange.max - chartInfo.xRange.min) / points);

@@ -1,7 +1,7 @@
 module.exports = function( config ) {
     config.set( {
         basePath: '',
-        frameworks: [ 'mocha'],
+        frameworks: [ 'mocha', 'chai', 'sinon'],
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
             './tests/tests.js'
@@ -23,7 +23,7 @@ module.exports = function( config ) {
         logLevel: config.LOG_INFO,
 
 
-        browsers: [ 'PhantomJS'],
+        browsers: [ 'PhantomJS', 'Chrome'],
       
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -31,8 +31,11 @@ module.exports = function( config ) {
         concurrency: Infinity,
         plugins: [
             require( "karma-webpack" ),
+            require( "karma-chai" ),
             require( "karma-mocha" ),
+            require( "karma-sinon" ),
             require( "karma-phantomjs-launcher" ),
+            require( "karma-chrome-launcher" ),
             require( "karma-spec-reporter" )
         ],
 

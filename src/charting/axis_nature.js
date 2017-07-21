@@ -4,21 +4,21 @@ import DrawSpec from './model/draw_spec.js';
 
 class AxisNature extends Nature {
 
-  initialize(svg, chartInfo, series) {
+  initialize(svg) {
     this.axisGroup = svg.append('g').attr('class', 'axis-' + this.specs.axisPosition);
   }
 
   createAxisFunction(chartInfo) {
     switch(this.specs.axisPosition) {
       case 'top':
-        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo)); // should this be top?
+        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo)); 
         break;
       case 'bottom':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
         this.axisGroup.attr('transform', 'translate(0,' + chartInfo.yRange.max + ')');
         break;
       case 'left':
-        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo)); // right?
+        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo)); 
         this.axisGroup.attr('transform', 'translate( ' + chartInfo.yRange.min + ', 0)');
         break;
       case 'right':

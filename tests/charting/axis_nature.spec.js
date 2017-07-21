@@ -13,11 +13,11 @@ describe( "AxisNature", function() {
     expect( an ).not.to.be.empty;
 
   } );
-  it( "initialize can be called", function() {
+  it( "initialize can be called", ()  => {
     const an = new AxisNature(new AxisSpec({key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0}));
     const initSpy = sinon.spy( an.initialize.bind(an) );
     const spyResult = initSpy( d3.select("body").append("svg"));
-    expect(initSpy.threw()).to.be.false;
+    expect(initSpy.threw()).to.be.false; 
 
   } );
 } );

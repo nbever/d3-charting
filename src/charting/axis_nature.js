@@ -11,14 +11,14 @@ class AxisNature extends Nature {
   createAxisFunction(chartInfo) {
     switch(this.specs.axisPosition) {
       case 'top':
-        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
+        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo)); // should this be top?
         break;
       case 'bottom':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
         this.axisGroup.attr('transform', 'translate(0,' + chartInfo.yRange.max + ')');
         break;
       case 'left':
-        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo));
+        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo)); // right?
         this.axisGroup.attr('transform', 'translate( ' + chartInfo.yRange.min + ', 0)');
         break;
       case 'right':
@@ -68,7 +68,6 @@ class AxisNature extends Nature {
   }
 
   setAxisStyles() {
-
     const stroke = this.getStroke();
 
     this.axisGroup.selectAll('path')

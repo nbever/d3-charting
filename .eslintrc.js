@@ -22,8 +22,11 @@ module.exports = {
     dataLayer: true,
     localStorage: true,
     sessionStorage: true,
+    describe: true,
+    it: true,
+    expect:true
   },
-  "parserOptions": {
+  parserOptions: {
         "ecmaVersion": 6,
         "sourceType": "module",
         "ecmaFeatures": {

@@ -1,25 +1,24 @@
 import * as d3 from 'd3';
-import Nature from './model/nature.js';
-import DrawSpec from './model/draw_spec.js';
+import Nature from './model/nature';
+import DrawSpec from './model/draw_spec';
 
 class AxisNature extends Nature {
-
   initialize(svg) {
-    this.axisGroup = svg.append('g').attr('class', 'axis-' + this.specs.axisPosition);
+    this.axisGroup = svg.append('g').attr('class', `axis-${ this.specs.axisPosition}`);
   }
 
   createAxisFunction(chartInfo) {
-    switch(this.specs.axisPosition) {
+    switch (this.specs.axisPosition) {
       case 'top':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo)); 
         break;
       case 'bottom':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', 'translate(0,' + chartInfo.yRange.max + ')');
+        this.axisGroup.attr('transform', `translate(0,${ chartInfo.yRange.max })`);
         break;
       case 'left':
         this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo)); 
-        this.axisGroup.attr('transform', 'translate( ' + chartInfo.yRange.min + ', 0)');
+        this.axisGroup.attr('transform', `translate( ${ chartInfo.yRange.min }, 0)`);
         break;
       case 'right':
         this.axis = d3.axisLeft(this.getYScale(this.specs, chartInfo));
@@ -37,17 +36,17 @@ class AxisNature extends Nature {
   }
 
   setAxisScale(chartInfo) {
-    switch(this.specs.axisPosition) {
+    switch (this.specs.axisPosition) {
       case 'top':
         this.axis.scale(this.getXScale(this.specs, chartInfo));
         break;
       case 'bottom':
         this.axis.scale(this.getXScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', 'translate(0,' + chartInfo.yRange.max + ')');
+        this.axisGroup.attr('transform', `translate(0,${ chartInfo.yRange.max })`);
         break;
       case 'left':
         this.axis.scale(this.getYScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', 'translate( ' + chartInfo.yRange.min + ', 0)');
+        this.axisGroup.attr('transform', `translate( ${ chartInfo.yRange.min }, 0)`);
         break;
       case 'right':
         this.axis.scale(this.getYScale(this.specs, chartInfo));
@@ -104,7 +103,6 @@ class AxisNature extends Nature {
 }
 
 class AxisSpec extends DrawSpec {
-
   static MAX_ONLY = 'MAX_ONLY';
   static positionTypes = ['top', 'bottom', 'left', 'right'];
 

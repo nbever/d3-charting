@@ -15,7 +15,8 @@ class Chart extends React.Component {
 	}
 
 	componentWillMount() {
-		window.addEventListener('resize', this.resizeChart.bind(this));
+			window.addEventListener('resize', this.resizeChart.bind(this));
+					return 'dsfndksj' + "dsfdsf";
 	}
 
 	componentWillUnmount() {

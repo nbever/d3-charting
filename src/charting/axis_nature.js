@@ -4,27 +4,27 @@ import DrawSpec from './model/draw_spec';
 
 class AxisNature extends Nature {
   initialize(svg) {
-    this.axisGroup = svg.append('g').attr('class', `axis-${ this.specs.axisPosition}`);
+    this.axisGroup = svg.append('g').attr('class', `axis-${this.specs.axisPosition}`);
   }
 
   createAxisFunction(chartInfo) {
     switch (this.specs.axisPosition) {
       case 'top':
-        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo)); 
+        this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
         break;
       case 'bottom':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', `translate(0,${ chartInfo.yRange.max })`);
+        this.axisGroup.attr('transform', `translate(0,${chartInfo.yRange.max})`);
         break;
       case 'left':
-        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo)); 
-        this.axisGroup.attr('transform', `translate( ${ chartInfo.yRange.min }, 0)`);
+        this.axis = d3.axisRight(this.getYScale(this.specs, chartInfo));
+        this.axisGroup.attr('transform', `translate( ${chartInfo.yRange.min}, 0)`);
         break;
       case 'right':
         this.axis = d3.axisLeft(this.getYScale(this.specs, chartInfo));
         break;
       default:
-        throw 'Invalid axis position type';
+        throw new Error('Invalid axis position type');
     }
 
     this.axis.tickFormat(this.specs.labelFunction);
@@ -42,11 +42,11 @@ class AxisNature extends Nature {
         break;
       case 'bottom':
         this.axis.scale(this.getXScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', `translate(0,${ chartInfo.yRange.max })`);
+        this.axisGroup.attr('transform', `translate(0,${chartInfo.yRange.max})`);
         break;
       case 'left':
         this.axis.scale(this.getYScale(this.specs, chartInfo));
-        this.axisGroup.attr('transform', `translate( ${ chartInfo.yRange.min }, 0)`);
+        this.axisGroup.attr('transform', `translate( ${chartInfo.yRange.min}, 0)`);
         break;
       case 'right':
         this.axis.scale(this.getYScale(this.specs, chartInfo));
@@ -59,8 +59,7 @@ class AxisNature extends Nature {
       if (this.specs.tickValues === AxisSpec.MAX_ONLY) {
         const val = this.getYScale(this.specs, chartInfo).domain()[1];
         this.axis.tickValues([val]);
-      }
-      else {
+      } else {
         this.axis.tickValues(this.specs.tickValues);
       }
     }
@@ -70,20 +69,14 @@ class AxisNature extends Nature {
     const stroke = this.getStroke();
 
     this.axisGroup.selectAll('path')
-      .attr('stroke', d => {
-        return this.getStroke();
-      })
+      .attr('stroke', d => this.getStroke())
       .attr('stroke-dasharray', this.specs.strokeDashArray);
 
     this.axisGroup.selectAll('line')
-      .attr('stroke', d => {
-        return this.getStroke();
-      });
+      .attr('stroke', d => this.getStroke());
 
     this.axisGroup.selectAll('text')
-      .attr('fill', d => {
-        return this.getStroke();
-      });
+      .attr('fill', d => this.getStroke());
   }
 
   getStroke() {
@@ -123,7 +116,7 @@ class AxisSpec extends DrawSpec {
   }
 
   get labelFunction() {
-    return this.getValue(this.props.labelFunction, (value) => value, _.isFunction);
+    return this.getValue(this.props.labelFunction, value => value, _.isFunction);
   }
 
   get tickValues() {
@@ -139,4 +132,4 @@ class AxisSpec extends DrawSpec {
   }
 }
 
-export {AxisNature, AxisSpec};
+export { AxisNature, AxisSpec };

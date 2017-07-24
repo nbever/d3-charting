@@ -57,6 +57,6 @@
     "build": "./node_modules/.bin/webpack -d",
     "dev": "./node_modules/.bin/webpack-dev-server --open",
     "test": "NODE_ENV=testing node_modules/karma/bin/karma start --single-run",
-    "test:watch": "NODE_ENV=testing node_modules/karma/bin/karma start"
+    "test:watch": "NODE_ENV=testing node_modules/karma/bin/karma start  "
   }
 }

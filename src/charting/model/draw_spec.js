@@ -1,16 +1,12 @@
 export default class DrawSpec {
+  constructor(props) {
+    if (_.isUndefined(props.key)) {
+      throw new Error('No key property was defined');
+    }
 
-	constructor(props) {
-
-		if (_.isUndefined(props.key)) {
-			throw 'No key property was defined';
-		}
-
-		this.props = props;
-		this.getKey = () => {
-			return this.props.key;
-		}
-	}
+    this.props = props;
+    this.getKey = () => this.props.key;
+  }
 
   getValue(value, defaultValue, typeFx = _.isString) {
     const rtn = (_.isUndefined(value) || !typeFx(value)) ? defaultValue : value;
@@ -18,7 +14,8 @@ export default class DrawSpec {
   }
 
   get show() {
-    const showIt = _.isUndefined(this.props.show) || !_.isBoolean(this.props.show) ? true : this.props.show;
+    const showIt = _.isUndefined(this.props.show) ||
+      !_.isBoolean(this.props.show) ? true : this.props.show;
     return showIt;
   }
 

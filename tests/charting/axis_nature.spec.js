@@ -100,7 +100,7 @@ describe('AxisNature', () => {
 
   it('draws something', () => {
     const an = new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 }));
-    debugger
+    // debugger
     // const initSpy = sinon.spy(an.initialize.bind(an));
     // initSpy(d3.select('body').append('svg'));
     // expect(initSpy.threw()).to.be.false;

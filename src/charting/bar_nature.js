@@ -4,7 +4,6 @@ import DrawSpec from './model/draw_spec.js';
 import ChartEvent from './model/chart_event.js';
 
 class BarNature extends Nature {
-
   initialize(svg, chartInfo, series) {
     this.barGroup = svg.append('g').attr('class', 'bar_nature');
   }
@@ -15,7 +14,8 @@ class BarNature extends Nature {
     const bars = this.barGroup.selectAll('.bar_group')
       .data(series[0])
       .enter()
-      .append('g').attr('class', 'bar_group')
+      .append('g')
+      .attr('class', 'bar_group')
       .attr('data-spec-index', (d,i) => i );
 
     bars.selectAll('.bar')
@@ -40,7 +40,6 @@ class BarNature extends Nature {
   }
 
   draw(svg, chartInfo, series) {
-
     if (_.isUndefined(this.barGroup)) {
       this.initialize(svg, chartInfo, series);
     }
@@ -61,20 +60,12 @@ class BarNature extends Nature {
         return 'visible';
       })
       .selectAll('.bar')
-      .data( d => d.datapoints )
+      .data( d => d.datapoints)
       .transition()
-      .attr('width', (d, i, nodes) => {
-        return this.getWidth(d, i, nodes, maxBarWidth);
-      })
-      .attr('height', (d, i, nodes) => {
-        return this.getHeight(d, i, nodes, chartInfo);
-      })
-      .attr('x', (d, i, nodes) => {
-        return this.getXCoord(d, i, nodes, maxBarWidth, chartInfo);
-      })
-      .attr('y', (d, i, nodes) => {
-        return this.getYCoord(d, i, nodes, chartInfo);
-      })
+      .attr('width', (d, i, nodes) => this.getWidth(d, i, nodes, maxBarWidth))
+      .attr('height', (d, i, nodes) => this.getHeight(d, i, nodes, chartInfo))
+      .attr('x', (d, i, nodes) => this.getXCoord(d, i, nodes, maxBarWidth, chartInfo))
+      .attr('y', (d, i, nodes) => this.getYCoord(d, i, nodes, chartInfo))
       .attr('fill', (d,i,nodes) => this.getSpecFromChild(nodes[0]).fill)
       .attr('fill-opacity', (d,i,nodes) => this.getSpecFromChild(nodes[0]).opacity)
       .attr('cursor', (d, i, nodes) => this.getSpecFromChild(nodes[0]).cursor);
@@ -84,9 +75,7 @@ class BarNature extends Nature {
       .selectAll('.bar-outline')
       .data( d => d.datapoints )
       .transition()
-      .attr('points', (d, i, nodes) => {
-        return this.buildLine(d, i, nodes, maxBarWidth, chartInfo);
-      })
+      .attr('points', (d, i, nodes) => this.buildLine(d, i, nodes, maxBarWidth, chartInfo))
       .attr('stroke-width', (d, i, nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
       .attr('fill', 'none')
       .attr('stroke', (d, i, nodes) => this.getSpecFromChild(nodes[0]).stroke);
@@ -139,11 +128,8 @@ class BarNature extends Nature {
   }
 
   needToBuildNewBars(series) {
-
     const circleCount = this.countBars();
-    const points = series[0].reduce((total,s) => {
-      return total + s.datapoints.length;
-    }, 0);
+    const points = series[0].reduce((total, s) => total + s.datapoints.length, 0);
 
     return (circleCount !== points);
   }
@@ -157,12 +143,11 @@ class BarNature extends Nature {
       return undefined;
     }
 
-    return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'))];
+    return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'), 10)];
   }
 }
 
 class BarSpec extends DrawSpec {
-
   get barWidth() {
     return this.getValue(this.props.barWidth, 50, _.isNumber);
   }

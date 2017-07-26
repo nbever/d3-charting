@@ -65,6 +65,7 @@ class Chart extends React.Component<ChartProps, ChartState>  {
   }
 
   setRoot(elem) {
+    // debugger
     this.root = elem;
     this.initializeChart();
   }

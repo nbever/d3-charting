@@ -12,6 +12,10 @@ import { TrianglePointNature } from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/model/point_nature';
 import { BarNature, BarSpec } from '../../src/charting/bar_nature';
 
+
+import { buildChartInfoObject } from '../../src/charting/util/chartinfo_factory';
+import { createSvgElement } from '../../src/charting/util/svg_factory';
+
 import {
   AxisNature, AxisSpec,
 } from '../../src/charting/axis_nature';
@@ -49,35 +53,24 @@ const testData = {
     },
   },
   natures: [
-    new BarNature([
-      new BarSpec({ key: 'l3',
-        strokeWidth: 2,
-        stroke: 'purple',
-        fill: 'yellow',
-        opacity: 0.4,
-        barWidth: 10,
-        useGlobalScale: false,
-        cursor: 'pointer' }),
-    ]),
     new LineNature([
       new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 }),
-      new LineSpec({ key: 'l2', color: 'blue' }),
     ]),
     new CirclePointNature([
       new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
     ]),
-    new TrianglePointNature([
-      new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
-    ]),
-    // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
-    new HoverAxisNature(new AxisSpec({ key: '',
-      position: 'left',
-      ticks: 1,
-      useGlobalScale: false,
-      tickValues: AxisSpec.MAX_ONLY,
-      strokeDashArray: '8,4',
-      labelFunction: tick => parseInt(tick, 10).toFixed(2) })),
-    new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
+    // new TrianglePointNature([
+    //   new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
+    // ]),
+    // // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
+    // new HoverAxisNature(new AxisSpec({ key: '',
+    //   position: 'left',
+    //   ticks: 1,
+    //   useGlobalScale: false,
+    //   tickValues: AxisSpec.MAX_ONLY,
+    //   strokeDashArray: '8,4',
+    //   labelFunction: tick => parseInt(tick, 10).toFixed(2) })),
+    // new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
   ],
 };
 
@@ -100,11 +93,11 @@ describe('AxisNature', () => {
 
   it('draws something', () => {
     const an = new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 }));
-    // debugger
-    // const initSpy = sinon.spy(an.initialize.bind(an));
-    // initSpy(d3.select('body').append('svg'));
-    // expect(initSpy.threw()).to.be.false;
-    // 
-    // an.draw(d3.select('body').append('svg'), JSON.parse('{"xRange":{"min":48,"max":911},"yRange":{"min":48,"max":404},"_xRange":{"min":48,"max":911},"_yRange":{"min":48,"max":404},"_scaleObj":{"yScales":{},"xScales":{}}, "scales":{"xScales": {"x": 42, "y":43} } } '), [[null]]);
+    const chartInfo = buildChartInfoObject(testData.data,
+      [0, 100], 20,
+      [0, 500], 10,
+      () => {});
+   
+    an.draw(createSvgElement('body'), chartInfo, [[null]]);
   });
 });

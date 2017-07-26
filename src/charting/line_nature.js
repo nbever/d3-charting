@@ -26,7 +26,7 @@ class LineNature extends Nature {
       .transition()
       .attr('d', (d, i) => {
         if (this.specs[i].show === false) {
-          return;
+          return () => {};
         }
 
         return this.getLineMethod(this.specs[i], chartInfo)(d.datapoints);

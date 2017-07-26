@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import ChartInfo from '../model/chart_info';
 import * as _ from 'lodash';
 
-interface IdataObject { [index: string]: {datapoints: number[] } };
+interface IdataObject { [index: string]: {datapoints: {x:number, y: number}[] } };
 
 const computeScales = (data: IdataObject,
        mapFunction: (number)=>number ,

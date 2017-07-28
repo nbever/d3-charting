@@ -9,6 +9,5 @@ export const strings = new LocalizedStrings({
     },
   },
   jp: {
-
   },
 });

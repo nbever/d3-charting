@@ -15,7 +15,7 @@ import { strings } from './utils/strings';
 
 require('./styles/base.scss');
 
-String.prototype.width = function (font) {
+String.prototype.width = function monkeyWidth(font) {
   let o = $(`<div>${this}</div>`)
       .css({ position: 'absolute', float: 'left', 'white-space': 'nowrap', visibility: 'hidden', font })
       .appendTo($('body')),
@@ -46,7 +46,7 @@ class App extends React.Component {
       },
       natures: [
         new BarNature([
-          new BarSpec({ key: 'l3',
+          new BarSpec({ key: 'l1',
             strokeWidth: 2,
             stroke: 'purple',
             fill: 'yellow',
@@ -55,6 +55,7 @@ class App extends React.Component {
             useGlobalScale: false,
             cursor: 'pointer' }),
         ]),
+
         // new StackedBarNature([
         //   new StackedBarSpec({ key: 'l3',
         //     strokeWidth: 2,
@@ -71,28 +72,48 @@ class App extends React.Component {
         //     barWidth: 10,
         //     cursor: 'pointer' }),
         // ]),
+
         new LineNature([
           new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 }),
-          new LineSpec({ key: 'l2', color: 'blue' }),
+          // new LineSpec({ key: 'l2', color: 'blue' }),
         ]),
-        new CirclePointNature([
-          new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
-        ]),
-        new TrianglePointNature([
-          new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
-        ]),
-        // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
+        // new CirclePointNature([
+        //   new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
+        // ]),
+        // new TrianglePointNature([
+        //   new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
+        // ]),
+        new AxisNature(new AxisSpec({ key: '', position: 'left', ticks: 3 })),
         new HoverAxisNature(new AxisSpec({ key: '',
           position: 'left',
           ticks: 1,
           useGlobalScale: false,
           tickValues: AxisSpec.MAX_ONLY,
           strokeDashArray: '8,4',
-          labelFunction: tick => parseInt(tick).toFixed(2) })),
+          labelFunction: tick => parseInt(tick, 10).toFixed(2) })),
         new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
       ],
     };
   }
+
+  setVisibility(val, key) {
+    const natures = this.state.natures;
+
+    natures.forEach((n) => {
+      if (_.isArray(n.specs)) {
+        n.specs.forEach((s) => {
+          if (s.getKey() == key) {
+            s.show = val;
+          }
+        });
+      } else if (n.specs.getKey() == key) {
+        n.specs.show = val;
+      }
+    });
+
+    this.setState({ ...this.state, natures });
+  }
+
 
   buttonClicked() {
     const newState = this.state;
@@ -154,23 +175,6 @@ class App extends React.Component {
     this.setState(_.cloneDeep(newState));
   }
 
-  setVisibility(val, key) {
-    const natures = this.state.natures;
-
-    natures.forEach((n) => {
-      if (_.isArray(n.specs)) {
-        n.specs.forEach((s) => {
-          if (s.getKey() == key) {
-            s.show = val;
-          }
-        });
-      } else if (n.specs.getKey() == key) {
-        n.specs.show = val;
-      }
-    });
-
-    this.setState({ ...this.state, natures });
-  }
 
   render() {
     return (

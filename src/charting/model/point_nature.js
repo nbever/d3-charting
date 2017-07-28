@@ -1,11 +1,10 @@
-import * as d3 from 'd3';
-import Nature from './nature.js';
-import DrawSpec from './draw_spec.js';
-import ChartEvent from './chart_event.js';
+
+import Nature from './nature';
+import DrawSpec from './draw_spec';
+import ChartEvent from './chart_event';
 
 class PointNature extends Nature {
-
-  initialize(svg, chartInfo, series) {
+  initialize(svg) { // , chartInfo, series
     this.pointGroup = svg.append('g').attr('class', `${this.getNatureName()}_nature`);
   }
 
@@ -13,18 +12,23 @@ class PointNature extends Nature {
     this.pointGroup.selectAll(`.${this.getNatureName()}_group`).remove();
 
     const points = this.pointGroup.selectAll(`.${this.getNatureName()}_nature`).data(series[0]).enter()
-      .append('g').attr('class',`${this.getNatureName()}_group`).attr('data-spec-index', (d,i) => i);
+      .append('g')
+      .attr('class', `${this.getNatureName()}_group`)
+      .attr('data-spec-index', (d, i) => i);
 
-    const appender = points.selectAll(`.${this.getNatureName()}`).data( d => d.datapoints).enter();
+    const appender = points
+      .selectAll(`.${this.getNatureName()}`)
+      .data(d => d.datapoints)
+      .enter();
 
     this.drawShape(appender)
-      .on('mouseover', (d,i,nodes) => {
+      .on('mouseover', (d, i, nodes) => {
         const spec = this.getSpecFromChild(nodes[0]);
-        chartInfo.fireEvent( new ChartEvent('mouseover', d, spec));
+        chartInfo.fireEvent(new ChartEvent('mouseover', d, spec));
       })
       .on('mouseout', (d, i, nodes) => {
         const spec = this.getSpecFromChild(nodes[0]);
-        chartInfo.fireEvent( new ChartEvent('mouseout', d, spec));
+        chartInfo.fireEvent(new ChartEvent('mouseout', d, spec));
       })
       .attr('class', `${this.getNatureName()}`);
   }
@@ -35,9 +39,7 @@ class PointNature extends Nature {
     }
 
     const elmCount = this.countElements();
-    const points = series[0].reduce((total,s) => {
-      return total + s.datapoints.length;
-    }, 0);
+    const points = series[0].reduce((total, s) => total + s.datapoints.length, 0);
 
     if (points !== elmCount) {
       this.buildNewShapes(chartInfo, series);
@@ -45,8 +47,8 @@ class PointNature extends Nature {
 
     const shape = this.pointGroup.selectAll(`.${this.getNatureName()}_group`)
       .data(series[0])
-      .attr('visibility', (d,i,nodes) => {
-        if (this.specs[i].show === false){
+      .attr('visibility', (d, i) => { // , nodes
+        if (this.specs[i].show === false) {
           return 'hidden';
         }
 
@@ -57,23 +59,23 @@ class PointNature extends Nature {
       .transition();
 
     this.setShapeAttrs(shape, chartInfo)
-      .attr('stroke', (d,i,nodes) => this.getSpecFromChild(nodes[0]).stroke)
-      .attr('stroke-width', (d,i,nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
-      .attr('fill', (d,i,nodes) => this.getSpecFromChild(nodes[0]).fill)
-      .attr('fill-opacity', (d,i,nodes) => this.getSpecFromChild(nodes[0]).opacity)
+      .attr('stroke', (d, i, nodes) => this.getSpecFromChild(nodes[0]).stroke)
+      .attr('stroke-width', (d, i, nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
+      .attr('fill', (d, i, nodes) => this.getSpecFromChild(nodes[0]).fill)
+      .attr('fill-opacity', (d, i, nodes) => this.getSpecFromChild(nodes[0]).opacity)
       .attr('cursor', (d, i, nodes) => this.getSpecFromChild(nodes[0]).cursor);
   }
 
   countElements() {
-    throw 'countElements is not implemented!';
+    throw new Error('countElements is not implemented!');
   }
 
-  drawShape(appender) {
-    throw 'drawShape is not implemented!';
+  drawShape() { // appender
+    throw new Error('drawShape is not implemented!');
   }
 
-  setShapeAttrs(shape) {
-    throw 'setShapeAttrs is not implemented!';
+  setShapeAttrs() { // shape
+    throw new Error('setShapeAttrs is not implemented!');
   }
 
   getNatureName() {
@@ -81,16 +83,15 @@ class PointNature extends Nature {
   }
 
   getSpecFromChild(child) {
-    if(_.isUndefined(child)) {
+    if (_.isUndefined(child)) {
       return undefined;
     }
 
-    return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'))];
+    return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'), 10)];
   }
 }
 
 class PointSpec extends DrawSpec {
-
   get radius() {
     return this.getValue(this.props.radius, 10, _.isNumber);
   }
@@ -112,4 +113,4 @@ class PointSpec extends DrawSpec {
   }
 }
 
-export {PointSpec,PointNature};
+export { PointSpec, PointNature };

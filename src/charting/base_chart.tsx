@@ -90,6 +90,7 @@ class Chart extends React.Component<ChartProps, ChartState>  {
     this.props.natures.forEach((n) => {
       const natureData = [];
       natureData.push(n.getKeys().map(k => data[k]));
+      //debugger
       n.draw(svg, chartInfo, natureData);
     });
   }

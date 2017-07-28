@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TitleToggle from './title_toggle.js';
-import {strings} from '../utils/strings.js';
+import TitleToggle from './title_toggle';
+import { strings } from '../utils/strings';
 
 class ChartBlock extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
 
     const initState = {};
 
-    //build our dictionary
-    for (let key in props.data) {
+    // build our dictionary
+    for (const key in props.data) {
       initState[key] = true;
     }
 
@@ -29,11 +28,14 @@ class ChartBlock extends React.Component {
   buildToggles() {
     const toggles = [];
 
-    for ( let key in this.props.data) {
+    for (const key in this.props.data) {
       toggles.push(
-        <TitleToggle dataKey={key} key={key}
-          onChange={(val, key) => this.setVisibility(val, key)}
-          selected={this.state[key]}>{key}
+        <TitleToggle
+          dataKey={key}
+          key={key}
+          onChange={(val, localkey) => this.setVisibility(val, localkey)}
+          selected={this.state[key]}
+        >{key}
         </TitleToggle>);
     }
 
@@ -61,12 +63,12 @@ class ChartBlock extends React.Component {
 ChartBlock.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.object,
-  setVisibility: PropTypes.func
+  setVisibility: PropTypes.func,
 };
 
 ChartBlock.defaultProps = {
   data: {},
-  setVisibility: _.noop
+  setVisibility: _.noop,
 };
 
 export default ChartBlock;

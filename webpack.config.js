@@ -1,5 +1,5 @@
-const webpack = require( 'webpack' );
-const path = require( 'path' );
+const webpack = require('webpack');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -13,7 +13,7 @@ const test_dir = path.resolve(__dirname, 'tests');
 
 const config = {
   entry: `${app_dir}/main.js`,
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
@@ -54,14 +54,14 @@ const config = {
         test: /\.scss$/,
         include: app_dir,
         use: extractSass.extract({
-            use: [{
+          use: [{
             loader: 'css-loader',
-              },
-              {
+          },
+          {
             loader: 'sass-loader',
           },
-            ],
-            // use style-loader in development
+          ],
+          // use style-loader in development
           fallback: 'style-loader',
         }),
       },

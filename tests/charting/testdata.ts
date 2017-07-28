@@ -3,12 +3,12 @@ import { HoverAxisNature } from '../../src/charting/hover_axis_nature';
 import { CirclePointNature } from '../../src/charting/circle_point_nature';
 import { TrianglePointNature } from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/model/point_nature';
-import { BarNature, BarSpec } from '../../src/charting/bar_nature';
+// import { BarNature, BarSpec } from '../../src/charting/bar_nature';
 import { AxisNature, AxisSpec } from '../../src/charting/axis_nature';
 
 const testData = {
   data: {
-    'l1': {
+    l1: {
       datapoints: [
         { x: 0, y: 123 },
         { x: 1, y: 100 },
@@ -17,7 +17,7 @@ const testData = {
         { x: 4, y: 12 },
       ],
     },
-    'l2': {
+    l2: {
       datapoints: [
         { x: 0, y: 45 },
         { x: 1, y: 72 },
@@ -26,7 +26,7 @@ const testData = {
         { x: 4, y: 12 },
       ],
     },
-    'l3': {
+    l3: {
       datapoints: [
         { x: 0, y: 1.32 },
         { x: 1, y: 24.123242 },
@@ -57,6 +57,4 @@ const testData = {
     new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
   ],
 };
-
-
 export default testData;

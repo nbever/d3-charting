@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Checkbox extends React.Component {
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {//props
     // const i = 0;
   }
 

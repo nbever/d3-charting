@@ -37,4 +37,15 @@ describe('AxisNature', () => {
 
     expect(document.getElementsByTagName('text').length).to.equal(5);
   });
+
+  it('draws something', () => {
+    const an = new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 }));
+    const chartInfo = buildChartInfoObject(testData.data,
+      [0, 1000], 20,
+      [0, 1000], 10,
+      () => { });
+
+    an.draw(createSvgElement('body', '1000px', '300px'), chartInfo, [[null]]);
+    
+  });
 });

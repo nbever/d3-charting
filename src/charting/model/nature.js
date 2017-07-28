@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+
 
 export default class Nature {
   constructor(specs) {
@@ -13,7 +13,7 @@ export default class Nature {
     return [this.specs.getKey()];
   }
 
-  draw(svg, scaleInfo, series) {
+  draw() { // svg, scaleInfo, series
     throw new Error('Method not implemented');
   }
 

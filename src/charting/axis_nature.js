@@ -130,6 +130,9 @@ class AxisSpec extends DrawSpec {
   get tickSizeOuter() {
     return this.getValue(this.props.tickSizeOuter, 6, _.isNumber);
   }
+  get position() {
+    return this.getValue(this.props.position, 'bottom', _.isString);
+  }
 }
 
 export { AxisNature, AxisSpec };

@@ -38,10 +38,7 @@ describe('AxisNature', () => {
   it('has specs that are properly passed through from the specs object', () => {
     const axisSpec = new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 });
     const an = new AxisNature(axisSpec);
-    const chartInfo = buildChartInfoObject(testData.data,
-      [0, 1000], 20,
-      [0, 1000], 10,
-      () => { });
+ 
     expect( an.getStroke()).to.equal(axisSpec.stroke);    
     expect( an.specs.ticks).to.equal(axisSpec.ticks);
     expect( an.specs.tickSizeOuter).to.equal(axisSpec.tickSizeOuter);

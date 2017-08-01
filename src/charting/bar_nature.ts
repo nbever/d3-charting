@@ -2,26 +2,32 @@ import { Nature } from './model/nature';
 import DrawSpec from './model/draw_spec';
 import ChartEvent from './model/chart_event';
 
+import { IChartDataObject, IScaleObject, ISeries } from './util/chartinfo_factory';
+import ChartInfo from './model/chart_info';
+
 import * as _ from 'lodash';
 
 class BarNature extends Nature {
+  public barGroup: d3.Selection<SVGGElement, {}, HTMLElement, any>;
 
-  private barGroup: any;
-  initialize(svg, chartInfo, series) { // , chartInfo, series
-    this.barGroup = svg.append('g').attr('class', 'bar_nature');
+  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>,
+    chartInfo: ChartInfo,
+    series: ISeries) { // , chartInfo, series
+    this.barGroup = svg.append<SVGGElement>('g').attr('class', 'bar_nature');
   }
 
-  buildNewBars(chartInfo, series) {
+  buildNewBars(chartInfo: ChartInfo, series: ISeries) {
     this.barGroup.selectAll('.bar_group').remove();
 
-    const bars = this.barGroup.selectAll('.bar_group')
-      .data(series[0])
+    const bars = this.barGroup
+      .selectAll<SVGElement, ISeries>('.bar_group')
+      .data<ISeries>(series[0])
       .enter()
       .append('g')
       .attr('class', 'bar_group')
       .attr('data-spec-index', (d, i) => i);
 
-    bars.selectAll('.bar')
+    const theBars = bars.selectAll<SVGElement,{}>('.bar')
       .data(d => d.datapoints)
       .enter()
       .append('rect')
@@ -54,7 +60,7 @@ class BarNature extends Nature {
     const maxBarWidth = this.calculateBarWidth(chartInfo, series);
 
     this.barGroup.selectAll('.bar_group')
-      .data(series[0])
+      .data<ISeries>(series[0])
       .attr('visibility', (d, i) => { // , nodes
         if (this.specs[i].show === false) {
           return 'hidden';
@@ -74,7 +80,7 @@ class BarNature extends Nature {
       .attr('cursor', (d, i, nodes) => this.getSpecFromChild(nodes[0]).cursor);
 
     this.barGroup.selectAll('.bar_group')
-      .data(series[0])
+      .data<ISeries>(series[0])
       .selectAll('.bar-outline')
       .data(d => d.datapoints)
       .transition()
@@ -107,8 +113,8 @@ class BarNature extends Nature {
 
   getYCoord(d, i, nodes, chartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
-   return this.getYScale(spec, chartInfo)(d.y);
- 
+    return this.getYScale(spec, chartInfo)(d.y);
+
     // return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
   }
 

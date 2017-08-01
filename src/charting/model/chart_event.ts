@@ -1,5 +1,10 @@
 class ChartEvent {
-  constructor(eventType, data, drawSpec, chartInfo) {
+   private _eventType: any;
+   private _data: any;
+   private _drawSpec: any;
+   private _chartInfo: any;
+
+  constructor(eventType, data, drawSpec, chartInfo?) {
     this._eventType = eventType;
     this._data = data;
     this._drawSpec = drawSpec;

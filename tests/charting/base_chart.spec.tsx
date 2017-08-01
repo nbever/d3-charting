@@ -15,7 +15,7 @@ describe('base chart react component', () => {
 
 
   it('renders something', () => {
-    render(<Chart domainPadding={5} padding={testData.data} data={testData.data} natures={testData.natures} />, document.getElementById('mychart'));
+    render(<Chart domainPadding={5} padding={8} rangePadding={0} data={testData.data} natures={testData.natures} />, document.getElementById('mychart'));
     expect(document.getElementsByClassName('axis-bottom')).not.to.be.empty;
     expect(document.getElementsByClassName('triangle')).not.to.be.empty;
     expect(document.getElementsByClassName('triangle').length).to.equal(5);

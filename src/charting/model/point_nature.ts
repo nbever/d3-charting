@@ -3,12 +3,15 @@ import { Nature } from './nature';
 import DrawSpec from './draw_spec';
 import ChartEvent from './chart_event';
 
+import ChartInfo from '../model/chart_info';
+import { IChartDataObject } from '../util/chartinfo_factory';
+
 import * as _ from 'lodash';
 
 class PointNature extends Nature {
 
-  private pointGroup: any;
-  initialize(svg, chartInfo, series) { // 
+  public pointGroup: any;
+  initialize(svg: d3.Selection< SVGElement,{},HTMLElement,any>, chartInfo: ChartInfo, series:IChartDataObject) { // 
     this.pointGroup = svg.append('g').attr('class', `${this.getNatureName()}_nature`);
   }
 

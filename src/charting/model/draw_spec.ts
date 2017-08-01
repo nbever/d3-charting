@@ -1,16 +1,15 @@
 
 import * as _ from 'lodash';
 
+
 export default class DrawSpec {
-  public props: any;
   private getKey: any;
 
-  constructor(props) {
+  constructor(public props: any) {
     if (_.isUndefined(props.key)) {
       throw new Error('No key property was defined');
     }
 
-    this.props = props;
     this.getKey = () => this.props.key;
   }
 

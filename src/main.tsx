@@ -9,26 +9,25 @@ import { LineSpec, LineNature } from './charting/line_nature';
 import { AxisSpec, AxisNature } from './charting/axis_nature';
 import { HoverAxisNature } from './charting/hover_axis_nature';
 import { CirclePointNature } from './charting/circle_point_nature';
-import { TrianglePointNature } from './charting/triangle_point_nature';
+import TrianglePointNature from './charting/triangle_point_nature';
 import { PointSpec } from './charting/model/point_nature';
 import { BarNature, BarSpec } from './charting/bar_nature';
 import { StackedBarNature, StackedBarSpec } from './charting/stacked_bar_nature';
 import Header from './components/header';
 import ChartBlock from './components/chart_block';
 import { strings } from './utils/strings';
+
 declare var require;
 require('./styles/base.scss');
 
-let stringPt:any = String.prototype;
+const stringPt: any = String.prototype;
 
 stringPt.width = function monkeyWidth(font) {
-  let o = $(`<div>${this}</div>`)
-      .css({ position: 'absolute', float: 'left', 'white-space': 'nowrap', visibility: 'hidden', font })
-      .appendTo($('body')),
-    w = o.width();
-
+  const o = $(`<div>${this}</div>`)
+    .css({ position: 'absolute', float: 'left', 'white-space': 'nowrap', visibility: 'hidden', font })
+    .appendTo($('body'));
+  const w = o.width();
   o.remove();
-
   return w;
 };
 
@@ -52,32 +51,34 @@ class App extends React.Component<any, any> {
       },
       natures: [
         new BarNature([
-          new BarSpec({ key: 'l1',
+          new BarSpec({
+            key: 'l1',
             strokeWidth: 2,
             stroke: 'purple',
             fill: 'yellow',
             opacity: 0.4,
             barWidth: 10,
             useGlobalScale: false,
-            cursor: 'pointer' }),
+            cursor: 'pointer'
+          }),
         ]),
 
-        new StackedBarNature([
-          new StackedBarSpec({ key: 'l3',
-            strokeWidth: 2,
-            stroke: 'purple',
-            fill: 'darkgreen',
-            opacity: 0.4,
-            barWidth: 10,
-            cursor: 'pointer' }),
-          new StackedBarSpec({ key: 'l2',
-            strokeWidth: 2,
-            stroke: 'black',
-            fill: 'red',
-            opacity: 0.4,
-            barWidth: 10,
-            cursor: 'pointer' }),
-        ]),
+        // new StackedBarNature([
+        //   new StackedBarSpec({ key: 'l3',
+        //     strokeWidth: 2,
+        //     stroke: 'purple',
+        //     fill: 'darkgreen',
+        //     opacity: 0.4,
+        //     barWidth: 10,
+        //     cursor: 'pointer' }),
+        //   new StackedBarSpec({ key: 'l2',
+        //     strokeWidth: 2,
+        //     stroke: 'black',
+        //     fill: 'red',
+        //     opacity: 0.4,
+        //     barWidth: 10,
+        //     cursor: 'pointer' }),
+        // ]),
 
         new LineNature([
           new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 }),
@@ -90,13 +91,15 @@ class App extends React.Component<any, any> {
           new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
         ]),
         new AxisNature(new AxisSpec({ key: '', position: 'left', ticks: 3 })),
-        new HoverAxisNature(new AxisSpec({ key: '',
+        new HoverAxisNature(new AxisSpec({
+          key: '',
           position: 'left',
           ticks: 1,
           useGlobalScale: false,
           tickValues: AxisSpec.MAX_ONLY,
           strokeDashArray: '8,4',
-          labelFunction: tick => parseInt(tick, 10).toFixed(2) })),
+          labelFunction: tick => parseInt(tick, 10).toFixed(2)
+        })),
         new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
       ],
     };
@@ -192,7 +195,12 @@ class App extends React.Component<any, any> {
             data={this.state.data}
             setVisibility={(val, key) => this.setVisibility(val, key)}
           >
-            <Chart domainPadding={5} padding={48} data={this.state.data} natures={this.state.natures} />
+            <Chart
+              domainPadding={5}
+              padding={48}
+              rangePadding={0}
+              data={this.state.data} 
+              natures={this.state.natures} />
           </ChartBlock>
         </div>
         <div className="button" onClick={() => this.buttonClicked()}>Change Data</div>

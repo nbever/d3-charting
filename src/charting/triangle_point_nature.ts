@@ -1,6 +1,7 @@
 
 import { PointNature } from './model/point_nature';
 
+
 class TrianglePointNature extends PointNature {
   getNatureName() {
     return 'triangle';
@@ -27,4 +28,4 @@ class TrianglePointNature extends PointNature {
   }
 }
 
-export { TrianglePointNature };
+export default TrianglePointNature;

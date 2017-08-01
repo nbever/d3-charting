@@ -1,16 +1,27 @@
 import * as d3 from 'd3';
 import ChartInfo from '../model/chart_info';
 import * as _ from 'lodash';
+interface IScaleObject {
+  full?: d3.ScaleLinear<number, number>,
+  x?: d3.ScaleLinear<number, number>,
+  y?: d3.ScaleLinear<number, number>
+};
 
-interface IdataObject { [index: string]: {datapoints: {x:number, y: number}[] } };
+interface IScalesContainer { xScales: IScaleObject, yScales: IScaleObject };
 
-const computeScales = (data: IdataObject,
-       mapFunction: (number)=>number ,
-       range: [number], 
-       scalePadding:number) => {
+interface ISeries  { datapoints: { x: number, y: number }[] };
+interface IChartDataObject {
+  [index: string]: ISeries
+};
+
+
+const computeScales = (data: IChartDataObject,
+  mapFunction: (number) => number,
+  range: [number],
+  scalePadding: number) => {
   let min = Number.MAX_VALUE;
   let max = Number.MIN_VALUE;
-  const scales =<any> {};
+  const scales = <IScaleObject>{};
 
   _.forOwn(data, (value, key) => {
     const subRange = d3.extent(data[key].datapoints.map(mapFunction));
@@ -26,23 +37,23 @@ const computeScales = (data: IdataObject,
   return scales;
 };
 
-const computeRange = (data: IdataObject, yRange:[number], rangePadding: number) => {
+const computeRange = (data: IChartDataObject, yRange: [number], rangePadding: number) => {
   const yScales = computeScales(data, d => d.y, yRange, rangePadding);
   yScales.y = yScales.full;
   delete yScales.full;
   return yScales;
 };
 
-const computeDomain = (data: IdataObject, xRange: [number], domainPadding: number) => {
+const computeDomain = (data: IChartDataObject, xRange: [number], domainPadding: number) => {
   const xScales = computeScales(data, d => d.x, xRange, domainPadding);
   xScales.x = xScales.full;
   delete xScales.full;
   return xScales;
 };
 
-const buildChartInfoObject = (data:IdataObject,
-  xRange:[number], domainPadding:number ,
-  yRange:[number], rangePadding: number, eventHandler) => {
+const buildChartInfoObject = (data: IChartDataObject,
+  xRange: [number], domainPadding: number,
+  yRange: [number], rangePadding: number, eventHandler) => {
   const xScales = computeDomain(data, xRange, domainPadding);
   const yScales = computeRange(data, yRange, rangePadding);
 
@@ -57,4 +68,4 @@ const buildChartInfoObject = (data:IdataObject,
 };
 
 
-export { buildChartInfoObject };
+export { buildChartInfoObject, IChartDataObject, IScaleObject, IScalesContainer,ISeries };

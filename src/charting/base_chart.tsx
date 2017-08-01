@@ -2,20 +2,21 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
-import { buildChartInfoObject } from './util/chartinfo_factory';
+import { buildChartInfoObject, IChartDataObject, IScaleObject } from './util/chartinfo_factory';
 import { createSvgElement } from './util/svg_factory';
+import ChartInfo  from './model/chart_info';
 
  interface ChartProps {
   padding: PropTypes.number,
-  data: PropTypes.object,
+  data: IChartDataObject,
   natures: PropTypes.array,
   domainPadding: PropTypes.number,
   rangePadding: PropTypes.number,
 };
 
  interface ChartState {
-  svg?:any,
-  chartInfo?: any,
+  svg?: d3.Selection< SVGElement,{},HTMLElement,any>,
+  chartInfo?: ChartInfo,
   padding?: PropTypes.number,
   data?: PropTypes.object,
   natures?: PropTypes.array,
@@ -28,9 +29,9 @@ class Chart extends React.Component<ChartProps, ChartState>  {
       svg: undefined,
     };
   private root: any;
-  private xRangeBF: any;
-  private yRangeBF: any;
-  private chartInfoBF: any;
+  private xRangeBF: [number];
+  private yRangeBF: [number];
+  private chartInfoBF: ChartInfo;
 
   public static propTypes: ChartProps= {
       padding: PropTypes.number,
@@ -47,7 +48,7 @@ class Chart extends React.Component<ChartProps, ChartState>  {
       rangePadding: 0,
     };
       
-  constructor(public props: any) {
+  constructor(public props: ChartProps) {
     super(props);
   }
 
@@ -82,7 +83,7 @@ class Chart extends React.Component<ChartProps, ChartState>  {
     this.drawNatures(svg, chartInfo, this.props.data);
   }
 
-  drawNatures(svg, chartInfo, data) {
+  drawNatures(svg: d3.Selection< SVGElement,{},HTMLElement,any>, chartInfo: ChartInfo, data) {
     if (_.isUndefined(this.props.natures)) {
       return;
     }
@@ -126,11 +127,11 @@ class Chart extends React.Component<ChartProps, ChartState>  {
     return this.yRangeBF;
   }
 
-  get chartInfo() {
+  get chartInfo(): ChartInfo {
     return this.chartInfoBF;
   }
 
-  set chartInfo(chartInfo) {
+  set chartInfo(chartInfo: ChartInfo) {
     this.chartInfoBF = chartInfo;
   }
 

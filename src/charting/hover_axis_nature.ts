@@ -1,11 +1,23 @@
 import { AxisNature, AxisSpec } from './axis_nature';
 
+import * as _ from 'lodash';
+
+import { IChartDataObject, IScaleObject } from './util/chartinfo_factory';
+import ChartInfo from './model/chart_info';
+
 class HoverAxisNature extends AxisNature {
-  initialize(svg, chartInfo) {
-    this.axisGroup = svg.append('g').attr('class', `hover-axis-${this.specs.axisPosition}`);
+  private svg: any;
+  private useGlobalScale: any;
+  private hoverSpec: any;
+  private seriesKey: any;
+
+
+  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, chartInfo: ChartInfo) {
+    this.axisGroup = svg.append<SVGGElement>('g');
+    this.axisGroup.attr('class', `hover-axis-${this.specs.axisPosition}`);
   }
 
-  draw(svg, chartInfo, series) {
+  draw(svg, chartInfo: ChartInfo, series:IChartDataObject) {
     // do nothing
     this.svg = svg;
   }

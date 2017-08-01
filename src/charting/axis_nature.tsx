@@ -1,18 +1,19 @@
 import * as d3 from 'd3';
-import {Nature, IspecsObj} from './model/nature';
+import { Nature, IspecsObj } from './model/nature';
 import DrawSpec from './model/draw_spec';
 import * as _ from 'lodash';
 
+import ChartInfo from './model/chart_info';
 class AxisNature extends Nature {
-  private axis:any;
-  private axisGroup:any;
-  public  specs: IspecsObj;
-  
-  initialize(svg, ...rest) {
-    this.axisGroup = svg.append('g').attr('class', `axis-${this.specs.axisPosition}`);
+  public axis: d3.Axis<{}>;
+  public axisGroup: d3.Selection<SVGElement, {}, HTMLElement, any>;
+  public specs: IspecsObj;
+
+  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, ...rest) {
+    this.axisGroup = svg.append<SVGGElement>('g').attr('class', `axis-${this.specs.axisPosition}`);
   }
 
-  createAxisFunction(chartInfo) {
+  createAxisFunction(chartInfo: ChartInfo) {
     switch (this.specs.axisPosition) {
       case 'top':
         this.axis = d3.axisBottom(this.getXScale(this.specs, chartInfo));

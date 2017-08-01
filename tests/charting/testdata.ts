@@ -1,7 +1,7 @@
 import { LineSpec, LineNature } from '../../src/charting/line_nature';
 import { HoverAxisNature } from '../../src/charting/hover_axis_nature';
 import { CirclePointNature } from '../../src/charting/circle_point_nature';
-import { TrianglePointNature } from '../../src/charting/triangle_point_nature';
+import TrianglePointNature from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/model/point_nature';
 // import { BarNature, BarSpec } from '../../src/charting/bar_nature';
 import { AxisNature, AxisSpec } from '../../src/charting/axis_nature';

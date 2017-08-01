@@ -1,10 +1,17 @@
 import * as d3 from 'd3';
 import { BarNature, BarSpec } from './bar_nature';
 
+import * as _ from 'lodash';
+
 class StackedBarNature extends BarNature {
-  initialize(svg) { // , chartInfo, series
-    this.barGroup = svg.append('g').attr('class', 'stacked_bar_nature');
+  initialize(svg: d3.Selection<SVGGElement,{},HTMLElement,any>) { // , chartInfo, series
+    this.barGroup = svg.append<SVGGElement>('g');
+    this.barGroup.attr('class', 'stacked_bar_nature');
   }
+
+private yScale:any;
+private yMin:any;
+private yMax:any;
 
   draw(svg, chartInfo, series) {
     const stackedData = this.stackTheData(series);

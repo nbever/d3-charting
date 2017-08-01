@@ -7,7 +7,7 @@ class Checkbox extends React.Component<any, any> {
     // const i = 0;
   }
   public static propTypes= {
-    selected: PropTypes.boolean,
+    selected: PropTypes.bool,
     onClick: PropTypes.func,
   }
 

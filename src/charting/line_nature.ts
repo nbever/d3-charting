@@ -2,7 +2,11 @@ import * as d3 from 'd3';
 import { Nature } from './model/nature';
 import DrawSpec from './model/draw_spec';
 
+import * as _ from 'lodash';
+
 class LineNature extends Nature {
+  private lineGroup: any;
+  
   initialize(svg, chartInfo, series) {
     this.lineGroup = svg.append('g').attr('class', 'line_nature');
     const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
@@ -35,8 +39,8 @@ class LineNature extends Nature {
 
   getLineMethod(spec, chartInfo) {
     return d3.line()
-      .x(d => this.getXScale(spec, chartInfo)(d.x))
-      .y(d => this.getYScale(spec, chartInfo)(d.y));
+      .x(d => this.getXScale(spec, chartInfo)((<any>d).x))
+      .y(d => this.getYScale(spec, chartInfo)((<any>d).y));
   }
 }
 

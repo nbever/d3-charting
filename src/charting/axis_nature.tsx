@@ -1,9 +1,14 @@
 import * as d3 from 'd3';
-import Nature from './model/nature';
+import {Nature, IspecsObj} from './model/nature';
 import DrawSpec from './model/draw_spec';
+import * as _ from 'lodash';
 
 class AxisNature extends Nature {
-  initialize(svg) {
+  private axis:any;
+  private axisGroup:any;
+  public  specs: IspecsObj;
+  
+  initialize(svg, ...rest) {
     this.axisGroup = svg.append('g').attr('class', `axis-${this.specs.axisPosition}`);
   }
 
@@ -52,7 +57,7 @@ class AxisNature extends Nature {
         this.axis.scale(this.getYScale(this.specs, chartInfo));
         break;
       default:
-        throw 'Invalid axis position type';
+        throw new Error('Invalid axis position type');
     }
 
     if (!_.isUndefined(this.specs.tickValues)) {
@@ -83,7 +88,7 @@ class AxisNature extends Nature {
     return this.specs.stroke;
   }
 
-  draw(svg, chartInfo, series) {
+  draw(svg?, chartInfo?, series?) {
     if (_.isUndefined(this.axisGroup)) {
       this.initialize(svg, chartInfo, series);
       this.createAxisFunction(chartInfo);

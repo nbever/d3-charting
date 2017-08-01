@@ -1,9 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as _ from 'lodash';
 
-class Checkbox extends React.Component {
+class Checkbox extends React.Component<any, any> {
   componentWillReceiveProps() {//props
     // const i = 0;
+  }
+  public static propTypes= {
+    selected: PropTypes.boolean,
+    onClick: PropTypes.func,
+  }
+
+  public static defaultProps = {
+    selected: true,
+    onClick: _.noop,
   }
 
   buildClassName() {
@@ -23,22 +33,14 @@ class Checkbox extends React.Component {
         className={`checkbox ${this.props.selected === true ? 'selected' : ''}`}
         onClick={() => this.props.onClick(!this.props.selected)}
       >
-        { this.props.selected === true &&
-        <div className="inner-checkbox" />
+        {this.props.selected === true &&
+          <div className="inner-checkbox" />
         }
       </div>
     );
   }
 }
 
-Checkbox.propTypes = {
-  selected: PropTypes.bool,
-  onClick: PropTypes.func,
-};
 
-Checkbox.defaultProps = {
-  selected: true,
-  onClick: _.noop,
-};
 
 export default Checkbox;

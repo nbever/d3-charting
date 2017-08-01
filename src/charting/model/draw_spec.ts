@@ -1,4 +1,10 @@
+
+import * as _ from 'lodash';
+
 export default class DrawSpec {
+  public props: any;
+  private getKey: any;
+
   constructor(props) {
     if (_.isUndefined(props.key)) {
       throw new Error('No key property was defined');
@@ -8,7 +14,7 @@ export default class DrawSpec {
     this.getKey = () => this.props.key;
   }
 
-  getValue(value, defaultValue, typeFx = _.isString) {
+  getValue(value, defaultValue, typeFx: (value: any)=>boolean = _.isString) {
     const rtn = (_.isUndefined(value) || !typeFx(value)) ? defaultValue : value;
     return rtn;
   }

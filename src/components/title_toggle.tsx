@@ -1,8 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+
+
+import * as React from 'react';
+import * as _ from 'lodash';
+import * as PropTypes from 'prop-types';
 import Checkbox from './checkbox/checkbox';
 
-class TitleToggle extends React.Component {
+
+class TitleToggle extends React.Component<any, any> {
+
+  public static propTypes = {
+    dataKey: PropTypes.string.isRequired,
+    selected: PropTypes.bool,
+    onChange: PropTypes.func,
+  };
+
+   public static defaultProps = {
+    selected: true,
+    onChange: _.noop,
+  }
   componentWillReceiveProps() { // props
     const i = 0;
   }
@@ -17,15 +32,5 @@ class TitleToggle extends React.Component {
   }
 }
 
-TitleToggle.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  selected: PropTypes.bool,
-  onChange: PropTypes.func,
-};
-
-TitleToggle.defaultProps = {
-  selected: true,
-  onChange: _.noop,
-};
 
 export default TitleToggle;

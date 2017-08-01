@@ -1,9 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import TitleToggle from './title_toggle';
 import { strings } from '../utils/strings';
+import * as _ from 'lodash';
 
-class ChartBlock extends React.Component {
+class ChartBlock extends React.Component<any, any> {
+
+  public static propTypes: {
+    title: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    setVisibility: PropTypes.func,
+  }
+
+  public static defaultProps = {
+    data: {},
+    setVisibility: _.noop,
+  };
+
   constructor(props) {
     super(props);
 
@@ -60,15 +73,5 @@ class ChartBlock extends React.Component {
   }
 }
 
-ChartBlock.propTypes = {
-  title: PropTypes.string.isRequired,
-  data: PropTypes.object,
-  setVisibility: PropTypes.func,
-};
-
-ChartBlock.defaultProps = {
-  data: {},
-  setVisibility: _.noop,
-};
 
 export default ChartBlock;

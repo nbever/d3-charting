@@ -1,9 +1,13 @@
-import Nature from './model/nature';
+import { Nature } from './model/nature';
 import DrawSpec from './model/draw_spec';
 import ChartEvent from './model/chart_event';
 
+import * as _ from 'lodash';
+
 class BarNature extends Nature {
-  initialize(svg) { // , chartInfo, series
+
+  private barGroup: any;
+  initialize(svg, chartInfo, series) { // , chartInfo, series
     this.barGroup = svg.append('g').attr('class', 'bar_nature');
   }
 
@@ -103,8 +107,9 @@ class BarNature extends Nature {
 
   getYCoord(d, i, nodes, chartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
-
-    return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
+   return this.getYScale(spec, chartInfo)(d.y);
+ 
+    // return chartInfo.yRange.max - this.getYScale(spec, chartInfo)(d.y);
   }
 
   getWidth(d, i, nodes, maxBarWidth) {
@@ -117,7 +122,7 @@ class BarNature extends Nature {
     const y0 = _.isUndefined(d.y0) ? 0 : d.y0;
 
     const height = this.getYScale(spec, chartInfo)(d.y) -
-      this.getYScale(spec, chartInfo)(y0);
+      this.getYScale(spec, chartInfo)(y0) + chartInfo.yRange.min;
     return height > 0 ? height : height * -1;
   }
 

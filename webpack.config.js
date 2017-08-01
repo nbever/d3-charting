@@ -12,7 +12,7 @@ const test_dir = path.resolve(__dirname, 'tests');
 
 
 const config = {
-  entry: `${app_dir}/main.js`,
+  entry: `${app_dir}/main.tsx`,
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],

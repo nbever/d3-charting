@@ -1,4 +1,4 @@
-import { AxisNature, AxisSpec } from './axis_nature.js';
+import { AxisNature, AxisSpec } from './axis_nature';
 
 class HoverAxisNature extends AxisNature {
   initialize(svg, chartInfo) {

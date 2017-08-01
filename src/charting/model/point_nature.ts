@@ -1,10 +1,14 @@
 
-import Nature from './nature';
+import { Nature } from './nature';
 import DrawSpec from './draw_spec';
 import ChartEvent from './chart_event';
 
+import * as _ from 'lodash';
+
 class PointNature extends Nature {
-  initialize(svg) { // , chartInfo, series
+
+  private pointGroup: any;
+  initialize(svg, chartInfo, series) { // 
     this.pointGroup = svg.append('g').attr('class', `${this.getNatureName()}_nature`);
   }
 
@@ -70,11 +74,11 @@ class PointNature extends Nature {
     throw new Error('countElements is not implemented!');
   }
 
-  drawShape() { // appender
+  drawShape(appender? : any): any { // appender
     throw new Error('drawShape is not implemented!');
   }
 
-  setShapeAttrs() { // shape
+  setShapeAttrs(arg1?:any, arg2?:any): any { // shape
     throw new Error('setShapeAttrs is not implemented!');
   }
 
@@ -93,7 +97,7 @@ class PointNature extends Nature {
 
 class PointSpec extends DrawSpec {
   get radius() {
-    return this.getValue(this.props.radius, 10, _.isNumber);
+    return this.getValue(this.props.radius, 10, <any> _.isNumber);
   }
 
   get stroke() {

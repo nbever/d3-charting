@@ -1,5 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { render } from 'react-dom';
+import * as  $ from 'jquery';
+
+import * as _ from 'lodash';
+
 import Chart from './charting/base_chart';
 import { LineSpec, LineNature } from './charting/line_nature';
 import { AxisSpec, AxisNature } from './charting/axis_nature';
@@ -12,10 +16,12 @@ import { StackedBarNature, StackedBarSpec } from './charting/stacked_bar_nature'
 import Header from './components/header';
 import ChartBlock from './components/chart_block';
 import { strings } from './utils/strings';
-
+declare var require;
 require('./styles/base.scss');
 
-String.prototype.width = function monkeyWidth(font) {
+let stringPt:any = String.prototype;
+
+stringPt.width = function monkeyWidth(font) {
   let o = $(`<div>${this}</div>`)
       .css({ position: 'absolute', float: 'left', 'white-space': 'nowrap', visibility: 'hidden', font })
       .appendTo($('body')),
@@ -26,7 +32,7 @@ String.prototype.width = function monkeyWidth(font) {
   return w;
 };
 
-class App extends React.Component {
+class App extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -56,33 +62,33 @@ class App extends React.Component {
             cursor: 'pointer' }),
         ]),
 
-        // new StackedBarNature([
-        //   new StackedBarSpec({ key: 'l3',
-        //     strokeWidth: 2,
-        //     stroke: 'purple',
-        //     fill: 'darkgreen',
-        //     opacity: 0.4,
-        //     barWidth: 10,
-        //     cursor: 'pointer' }),
-        //   new StackedBarSpec({ key: 'l2',
-        //     strokeWidth: 2,
-        //     stroke: 'black',
-        //     fill: 'red',
-        //     opacity: 0.4,
-        //     barWidth: 10,
-        //     cursor: 'pointer' }),
-        // ]),
+        new StackedBarNature([
+          new StackedBarSpec({ key: 'l3',
+            strokeWidth: 2,
+            stroke: 'purple',
+            fill: 'darkgreen',
+            opacity: 0.4,
+            barWidth: 10,
+            cursor: 'pointer' }),
+          new StackedBarSpec({ key: 'l2',
+            strokeWidth: 2,
+            stroke: 'black',
+            fill: 'red',
+            opacity: 0.4,
+            barWidth: 10,
+            cursor: 'pointer' }),
+        ]),
 
         new LineNature([
           new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 }),
-          // new LineSpec({ key: 'l2', color: 'blue' }),
+          new LineSpec({ key: 'l2', color: 'blue' }),
         ]),
-        // new CirclePointNature([
-        //   new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
-        // ]),
-        // new TrianglePointNature([
-        //   new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
-        // ]),
+        new CirclePointNature([
+          new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
+        ]),
+        new TrianglePointNature([
+          new PointSpec({ key: 'l2', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
+        ]),
         new AxisNature(new AxisSpec({ key: '', position: 'left', ticks: 3 })),
         new HoverAxisNature(new AxisSpec({ key: '',
           position: 'left',
@@ -181,7 +187,11 @@ class App extends React.Component {
       <div>
         <Header />
         <div className="chart-stack">
-          <ChartBlock title={strings.charts.lineChart} data={this.state.data} setVisibility={(val, key) => this.setVisibility(val, key)}>
+          <ChartBlock
+            title={strings.charts.lineChart}
+            data={this.state.data}
+            setVisibility={(val, key) => this.setVisibility(val, key)}
+          >
             <Chart domainPadding={5} padding={48} data={this.state.data} natures={this.state.natures} />
           </ChartBlock>
         </div>

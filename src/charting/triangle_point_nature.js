@@ -1,9 +1,7 @@
-import * as d3 from 'd3';
-import Nature from './model/point_nature.js';
-import {PointNature} from './model/point_nature.js';
+
+import { PointNature } from './model/point_nature';
 
 class TrianglePointNature extends PointNature {
-
   getNatureName() {
     return 'triangle';
   }
@@ -13,7 +11,7 @@ class TrianglePointNature extends PointNature {
   }
 
   setShapeAttrs(shape, chartInfo) {
-    return shape.attr( 'points', (d, i, nodes) => this.buildPoints(d,nodes, chartInfo));
+    return shape.attr('points', (d, i, nodes) => this.buildPoints(d, nodes, chartInfo));
   }
 
   buildPoints(data, nodes, chartInfo) {
@@ -29,4 +27,4 @@ class TrianglePointNature extends PointNature {
   }
 }
 
-export {TrianglePointNature};
+export { TrianglePointNature };

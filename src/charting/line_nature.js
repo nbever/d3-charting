@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import Nature from './model/nature';
+import { Nature } from './model/nature';
 import DrawSpec from './model/draw_spec';
 
 class LineNature extends Nature {

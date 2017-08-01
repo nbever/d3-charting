@@ -1,7 +1,11 @@
 
+import * as _ from 'lodash';
+ interface IspecsObj { getKey:any, [key: string]: any };
 
-export default class Nature {
-  constructor(specs) {
+abstract class Nature {
+  specs: IspecsObj | IspecsObj[];
+
+  constructor(specs?:any) {
     this.specs = specs;
   }
 
@@ -13,9 +17,12 @@ export default class Nature {
     return [this.specs.getKey()];
   }
 
-  draw() { // svg, scaleInfo, series
-    throw new Error('Method not implemented');
-  }
+  abstract draw(svg?, scaleInfo?, series?): void;
+  
+  // { // 
+    
+  //   throw new Error('Method not implemented');
+  // }
 
   getXScale(spec, chartInfo) {
     if (spec.useGlobalScale === true) {
@@ -33,3 +40,4 @@ export default class Nature {
     return chartInfo.scales.yScales[spec.getKey()];
   }
 }
+export {IspecsObj, Nature};

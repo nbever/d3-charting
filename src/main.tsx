@@ -17,6 +17,8 @@ import Header from './components/header';
 import ChartBlock from './components/chart_block';
 import { strings } from './utils/strings';
 
+import * as styles from './styles/base.scss';
+
 declare var require;
 require('./styles/base.scss');
 
@@ -187,9 +189,9 @@ class App extends React.Component<any, any> {
 
   render() {
     return (
-      <div>
+      <div className={ styles.main }>
         <Header />
-        <div className="chart-stack">
+        <div className={ styles.chart}>
           <ChartBlock
             title={strings.charts.lineChart}
             data={this.state.data}
@@ -203,8 +205,8 @@ class App extends React.Component<any, any> {
               natures={this.state.natures} />
           </ChartBlock>
         </div>
-        <div className="button" onClick={() => this.buttonClicked()}>Change Data</div>
-        <div className="button" onClick={() => this.addPoint()}>Add Point</div>
+        <div className={ styles.button} onClick={() => this.buttonClicked()}>Change Data</div>
+        <div className={ styles.button} onClick={() => this.addPoint()}>Add Point</div>
       </div>
     );
   }

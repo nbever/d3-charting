@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
+import * as styles from '../../styles/base.scss';
+
 class Checkbox extends React.Component<any, any> {
   componentWillReceiveProps() {//props
     // const i = 0;
@@ -30,7 +32,7 @@ class Checkbox extends React.Component<any, any> {
   render() {
     return (
       <div
-        className={`checkbox ${this.props.selected === true ? 'selected' : ''}`}
+        className={`${styles.checkbox} ${this.props.selected === true ? styles.selected : ''}`}
         onClick={() => this.props.onClick(!this.props.selected)}
       >
         {this.props.selected === true &&

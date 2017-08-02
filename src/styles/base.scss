@@ -1,11 +1,9 @@
 @import 'variables';
 @import 'flexbox';
-@import 'fonts/bb';
-
+// @import 'fonts/bb';
 body {
 	margin: 0px;
-	padding: 0px;
-	font-family: 'Arial';
+	padding: 0px; // font-family: 'Arial';
 }
 
 div {
@@ -19,11 +17,9 @@ div {
 	color: $primary_offset_color;
 	cursor: pointer;
 	display: inline-block;
-
 	&:hover {
 		background-color: $primary_light;
 	}
-
 	&:active {
 		background-color: $primary_dark;
 	}

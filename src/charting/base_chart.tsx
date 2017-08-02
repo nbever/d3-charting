@@ -6,6 +6,9 @@ import { buildChartInfoObject, IChartDataObject, IScaleObject } from './util/cha
 import { createSvgElement } from './util/svg_factory';
 import ChartInfo  from './model/chart_info';
 
+import * as styles from '../styles/base.scss';
+
+
  interface ChartProps {
   padding: PropTypes.number,
   data: IChartDataObject,

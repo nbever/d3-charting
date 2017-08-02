@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import * as PropTypes from 'prop-types';
 import Checkbox from './checkbox/checkbox';
-
+import * as styles from '../styles/base.scss';
 
 class TitleToggle extends React.Component<any, any> {
 
@@ -14,7 +14,7 @@ class TitleToggle extends React.Component<any, any> {
     onChange: PropTypes.func,
   };
 
-   public static defaultProps = {
+  public static defaultProps = {
     selected: true,
     onChange: _.noop,
   }
@@ -24,9 +24,10 @@ class TitleToggle extends React.Component<any, any> {
 
   render() {
     return (
-      <div className="title-toggle">
-        <Checkbox selected={this.props.selected} onClick={newVal => this.props.onChange(newVal, this.props.dataKey)} />
-        <div className="toggle-text">{this.props.children}</div>
+      <div className={styles.titleToggle}>
+        <Checkbox selected={this.props.selected}
+          onClick={newVal => this.props.onChange(newVal, this.props.dataKey)} />
+        <div className={styles.toggleText}>{this.props.children}</div>
       </div>
     );
   }

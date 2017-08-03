@@ -48,7 +48,7 @@ class BarNature extends Nature {
       .attr('class', 'bar-outline');
   }
 
-  draw(svg, chartInfo, series) {
+  draw(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, chartInfo: ChartInfo, series: ISeries) {
     if (_.isUndefined(this.barGroup)) {
       this.initialize(svg, chartInfo, series);
     }
@@ -90,7 +90,7 @@ class BarNature extends Nature {
       .attr('stroke', (d, i, nodes) => this.getSpecFromChild(nodes[0]).stroke);
   }
 
-  buildLine(data, index, nodes, maxBarWidth, chartInfo) {
+  buildLine(data, index, nodes, maxBarWidth, chartInfo: ChartInfo) {
     const x = this.getXCoord(data, index, nodes, maxBarWidth, chartInfo);
     const y = this.getYCoord(data, index, nodes, chartInfo);
     const width = this.getWidth(data, index, nodes, maxBarWidth);
@@ -104,14 +104,14 @@ class BarNature extends Nature {
     return `${blPoint} ${tlPoint} ${trPoint} ${brPoint}`;
   }
 
-  getXCoord(d, i, nodes, maxBarWidth, chartInfo) {
+  getXCoord(d, i, nodes, maxBarWidth, chartInfo: ChartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
     const percWidth = spec.barWidth;
     const realWidth = Math.floor(maxBarWidth * (percWidth / 100.0));
     return this.getXScale(spec, chartInfo)(d.x) - (realWidth / 2);
   }
 
-  getYCoord(d, i, nodes, chartInfo) {
+  getYCoord(d, i, nodes, chartInfo: ChartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
     return this.getYScale(spec, chartInfo)(d.y);
 
@@ -123,7 +123,7 @@ class BarNature extends Nature {
     return Math.floor(maxBarWidth * (percWidth / 100.0));
   }
 
-  getHeight(d, i, nodes, chartInfo) {
+  getHeight(d, i, nodes, chartInfo: ChartInfo) {
     const spec = this.getSpecFromChild(nodes[0]);
     const y0 = _.isUndefined(d.y0) ? 0 : d.y0;
 
@@ -138,7 +138,7 @@ class BarNature extends Nature {
     return Math.floor((chartInfo.xRange.max - chartInfo.xRange.min) / points);
   }
 
-  needToBuildNewBars(series) {
+  needToBuildNewBars(series: ISeries) {
     const circleCount = this.countBars();
     const points = series[0].reduce((total, s) => total + s.datapoints.length, 0);
 

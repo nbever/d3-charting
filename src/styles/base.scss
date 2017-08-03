@@ -1,9 +1,20 @@
 @import 'variables';
 @import 'flexbox';
-// @import 'fonts/bb';
+@import './fonts/bb';
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Niconne|Open+Sans:400italic,700italic,400,700);
+
+// Font Variables
+// $customfont: 'Niconne', serif; 
+$customfont: bb; 
+// @import 'fontface';
+// @include fontFace('bb','./fonts/bb');
+
 body {
 	margin: 0px;
-	padding: 0px; // font-family: 'Arial';
+	padding: 0px; // 
+	font-family: $customfont;
+	// font-family: 'Niconne', cursive;
 }
 
 div {
@@ -12,6 +23,7 @@ div {
 
 .button {
 	padding: 12px;
+	
 	border-radius: $border_radius;
 	background-color: $primary_color;
 	color: $primary_offset_color;

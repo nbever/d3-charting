@@ -1,6 +1,8 @@
 import * as d3 from 'd3';
 import { BarNature, BarSpec } from './bar_nature';
 
+import { IChartDataObject, IScaleObject, ISeries } from './util/chartinfo_factory';
+import ChartInfo from './model/chart_info';
 import * as _ from 'lodash';
 
 class StackedBarNature extends BarNature {
@@ -13,14 +15,14 @@ private yScale:any;
 private yMin:any;
 private yMax:any;
 
-  draw(svg, chartInfo, series) {
+  draw(svg, chartInfo: ChartInfo, series: ISeries) {
     const stackedData = this.stackTheData(series);
     this.yScale = d3.scaleLinear()
       .domain([this.yMin, this.yMax])
       .range([chartInfo.yRange.min - chartInfo.padding,
         chartInfo.yRange.max - chartInfo.padding]);
 
-    super.draw(svg, chartInfo, [stackedData]);
+    super.draw(svg, chartInfo, <any>[stackedData]);
   }
 
   turnStackIntoDrawableSet(staks) {
@@ -45,7 +47,7 @@ private yMax:any;
     return series;
   }
 
-  stackTheData(series) {
+  stackTheData(series: ISeries) {
     const dataMap = this.buildXMap(series, this.specs[0]);
     const flatMap = this.flattenMap(dataMap);
     const stacked = d3.stack().keys(this.getKeys())(flatMap);

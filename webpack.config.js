@@ -9,19 +9,19 @@ const typingsForCssModules = require('typings-for-css-modules-loader');
 const extractSass = new ExtractTextPlugin('charting.css');
 
 
-const build_dir = path.resolve(__dirname, 'build');
-const app_dir = path.resolve(__dirname, 'src');
-const test_dir = path.resolve(__dirname, 'tests');
+const buildDir = path.resolve(__dirname, 'build');
+const appDir = path.resolve(__dirname, 'src');
+const testDir = path.resolve(__dirname, 'tests');
 
 
 const config = {
-  entry: `${app_dir}/main.tsx`,
+  entry: `${appDir}/main.tsx`,
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   output: {
-    path: build_dir,
+    path: buildDir,
     filename: 'charting.js',
   },
   module: {
@@ -33,7 +33,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        include: app_dir,
+        include: appDir,
         use: {
           loader: 'babel-loader',
           options: {
@@ -44,7 +44,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        include: test_dir,
+        include: testDir,
         use: {
           loader: 'babel-loader',
           options: {
@@ -70,7 +70,7 @@ const config = {
       // },
       {
         test: /\.scss$/,
-        include: app_dir,
+        include: appDir,
         use: extractSass.extract({
           use: [{
             loader: 'typings-for-css-modules-loader?module&namedExport&camelCase',
@@ -105,14 +105,14 @@ const config = {
       },
       {
         test: /\.(jpg|png|svg|gif)$/,
-        include: `${app_dir}/images`,
+        include: `${appDir}/images`,
         loader: 'file-loader?name=images/[name].[ext]',
       },
 
     ],
   },
   devServer: {
-    contentBase: build_dir,
+    contentBase: buildDir,
     compress: false,
     port: 9010,
     watchContentBase: true,
@@ -120,7 +120,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Charting POC',
-      template: `${app_dir}/index.html.ejs`,
+      template: `${appDir}/index.html.ejs`,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

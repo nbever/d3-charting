@@ -5,29 +5,30 @@ import * as _ from 'lodash';
 import { buildChartInfoObject, IChartDataObject, IScaleObject } from './util/chartinfo_factory';
 import { createSvgElement } from './util/svg_factory';
 import ChartInfo  from './model/chart_info';
+import {ChartNatureSpec}  from './base_chart_config';
 
 import * as styles from '../styles/base.scss';
 
 
- interface ChartProps {
+ export interface ChartProps {
   padding: PropTypes.number,
   data: IChartDataObject,
-  natures: PropTypes.array,
+  natures: ChartNatureSpec[],
   domainPadding: PropTypes.number,
   rangePadding: PropTypes.number,
 };
 
- interface ChartState {
+ export interface ChartState {
   svg?: d3.Selection< SVGElement,{},HTMLElement,any>,
   chartInfo?: ChartInfo,
   padding?: PropTypes.number,
   data?: PropTypes.object,
-  natures?: PropTypes.array,
+  natures?: ChartNatureSpec[],
   domainPadding?: PropTypes.number,
   rangePadding?: PropTypes.number,
 };
 
-class Chart extends React.Component<ChartProps, ChartState>  {
+export class Chart extends React.Component<ChartProps, ChartState>  {
   public state: ChartState = {
       svg: undefined,
     };
@@ -154,4 +155,4 @@ class Chart extends React.Component<ChartProps, ChartState>  {
 }
 
 
-export default Chart;
+

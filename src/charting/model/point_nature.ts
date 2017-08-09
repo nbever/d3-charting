@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 class PointNature extends Nature {
 
   public pointGroup: any;
-  initialize(svg: d3.Selection< SVGElement,{},HTMLElement,any>, chartInfo: ChartInfo, series:IChartDataObject) { // 
+  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, chartInfo: ChartInfo, series: IChartDataObject) { // 
     this.pointGroup = svg.append('g').attr('class', `${this.getNatureName()}_nature`);
   }
 
@@ -77,11 +77,11 @@ class PointNature extends Nature {
     throw new Error('countElements is not implemented!');
   }
 
-  drawShape(appender? : any): any { // appender
+  drawShape(appender?: any): any { // appender
     throw new Error('drawShape is not implemented!');
   }
 
-  setShapeAttrs(arg1?:any, arg2?:any): any { // shape
+  setShapeAttrs(arg1?: any, arg2?: any): any { // shape
     throw new Error('setShapeAttrs is not implemented!');
   }
 
@@ -97,10 +97,23 @@ class PointNature extends Nature {
     return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'), 10)];
   }
 }
+export interface PointSpecInitProp {
+  key: string, 
+  stroke?: string, 
+  fill?: string, 
+  radius?: number, 
+  cursor?: string,
+  opacity?: number
+};
 
 class PointSpec extends DrawSpec {
+
+  constructor(props: PointSpecInitProp) {
+    super(props);
+  }
+
   get radius() {
-    return this.getValue(this.props.radius, 10, <any> _.isNumber);
+    return this.getValue(this.props.radius, 10, <any>_.isNumber);
   }
 
   get stroke() {

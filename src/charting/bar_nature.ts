@@ -158,7 +158,25 @@ class BarNature extends Nature {
   }
 }
 
+export interface BarSpecInitProps{
+            key: string,
+            strokeWidth?: number,
+            stroke?: string,
+            fill?: string,
+            opacity?: number,
+            barWidth?: number,
+            useGlobalScale?: boolean,
+            cursor?: string
+          };
+
+
 class BarSpec extends DrawSpec {
+
+  constructor(props: BarSpecInitProps){
+    super(props);
+
+  }
+
   get barWidth() {
     return this.getValue(this.props.barWidth, 50, _.isNumber);
   }

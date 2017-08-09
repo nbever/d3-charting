@@ -101,9 +101,24 @@ class AxisNature extends Nature {
   }
 }
 
+export interface AxisSpecInitProp {
+  key: string,
+  position?: string,
+  ticks?: number,
+  useGlobalScale?: boolean,
+  tickValues?: string,
+  strokeDashArray?: string,
+  labelFunction?: (tick: string) => string,
+  tickSizeOuter?: number 
+};
+
 class AxisSpec extends DrawSpec {
   static MAX_ONLY = 'MAX_ONLY';
   static positionTypes = ['top', 'bottom', 'left', 'right'];
+
+  constructor(props: AxisSpecInitProp) {
+    super(props);
+  }
 
   get stroke() {
     return this.getValue(this.props.stroke, 'black', _.isString);

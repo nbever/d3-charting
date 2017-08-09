@@ -3,6 +3,7 @@
 import { PointNature } from './model/point_nature';
 
 import ChartInfo  from './model/chart_info';
+
 class CirclePointNature extends PointNature {
   getNatureName() {
     return 'dot';
@@ -29,4 +30,4 @@ class CirclePointNature extends PointNature {
   }
 }
 
-export { CirclePointNature };
+export default CirclePointNature ;

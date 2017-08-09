@@ -10,7 +10,7 @@ abstract class Nature {
   }
 
   getKeys() {
-    if (_.isArray(this.specs)) {
+    if ( this.specs instanceof Array ) {
       return this.specs.map(p => p.getKey());
     }
 

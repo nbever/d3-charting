@@ -6,21 +6,21 @@ import ChartInfo from './model/chart_info';
 import * as _ from 'lodash';
 
 class StackedBarNature extends BarNature {
-  initialize(svg: d3.Selection<SVGGElement,{},HTMLElement,any>) { // , chartInfo, series
+  initialize(svg: d3.Selection<SVGGElement, {}, HTMLElement, any>) { // , chartInfo, series
     this.barGroup = svg.append<SVGGElement>('g');
     this.barGroup.attr('class', 'stacked_bar_nature');
   }
 
-private yScale:any;
-private yMin:any;
-private yMax:any;
+  private yScale: any;
+  private yMin: any;
+  private yMax: any;
 
   draw(svg, chartInfo: ChartInfo, series: ISeries) {
     const stackedData = this.stackTheData(series);
     this.yScale = d3.scaleLinear()
       .domain([this.yMin, this.yMax])
       .range([chartInfo.yRange.min - chartInfo.padding,
-        chartInfo.yRange.max - chartInfo.padding]);
+      chartInfo.yRange.max - chartInfo.padding]);
 
     super.draw(svg, chartInfo, <any>[stackedData]);
   }
@@ -93,8 +93,20 @@ private yMax:any;
     return this.yScale;
   }
 }
-
+export interface StackedBarSpecInitProps {
+  key: string,
+  strokeWidth?: number,
+  stroke?: string,
+  fill?: string,
+  opacity?: number,
+  barWidth?: number,
+  cursor?: string
+}
 class StackedBarSpec extends BarSpec {
+
+  constructor(props: StackedBarSpecInitProps) {
+    super(props);
+  }
   get domainValue() {
     return this.getValue(this.props.domainValue, dp => dp.x, _.isFunction);
   }

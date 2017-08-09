@@ -1,6 +1,6 @@
 import { LineSpec, LineNature } from '../../src/charting/line_nature';
 import { HoverAxisNature } from '../../src/charting/hover_axis_nature';
-import { CirclePointNature } from '../../src/charting/circle_point_nature';
+import CirclePointNature from '../../src/charting/circle_point_nature';
 import TrianglePointNature from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/model/point_nature';
 // import { BarNature, BarSpec } from '../../src/charting/bar_nature';
@@ -46,7 +46,6 @@ const testData = {
     new TrianglePointNature([
       new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
     ]),
-    // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),
     new HoverAxisNature(new AxisSpec({ key: '',
       position: 'left',
       ticks: 1,
@@ -58,3 +57,5 @@ const testData = {
   ],
 };
 export default testData;
+
+    // new AxisNature(new AxisSpec({key: '', position: 'left', ticks: 3})),

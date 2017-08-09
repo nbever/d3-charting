@@ -2,12 +2,18 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as React from 'react';
 import { render } from 'react-dom';
-import Chart from '../../src/charting/base_chart';
+
+import { Chart, ChartProps, ChartState } from '../../src/charting/base_chart';
 
 import testData from './testdata';
 
+import * as styles from '../../src/styles/base.scss';
+
+
+
+
 describe('base chart react component', () => {
-  before(()=> {
+  before(() => {
     let iDiv = document.createElement('div');
     iDiv.id = 'mychart';
     document.getElementsByTagName('body')[0].appendChild(iDiv);

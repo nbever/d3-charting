@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 class LineNature extends Nature {
   private lineGroup: any;
-  
+
   initialize(svg, chartInfo, series) {
     this.lineGroup = svg.append('g').attr('class', 'line_nature');
     const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
@@ -30,7 +30,7 @@ class LineNature extends Nature {
       .transition()
       .attr('d', (d, i) => {
         if (this.specs[i].show === false) {
-          return () => {};
+          return () => { };
         }
 
         return this.getLineMethod(this.specs[i], chartInfo)(d.datapoints);
@@ -44,7 +44,18 @@ class LineNature extends Nature {
   }
 }
 
+export interface LineSpecInitProps {
+  key: string,
+  color?: string,
+  thickness?: number
+};
+
 class LineSpec extends DrawSpec {
+
+  constructor(props: LineSpecInitProps) {
+    super(props);
+  }
+
   get color() {
     return this.getValue(this.props.color, 'black', _.isString);
   }

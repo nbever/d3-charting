@@ -1,6 +1,14 @@
 
 import * as _ from 'lodash';
- interface IspecsObj { getKey:any, [key: string]: any };
+
+
+import ChartInfo  from './chart_info';
+ interface IspecsObj { 
+   [key: string]: any ,
+   [index: number]: any ,
+   
+   getKey:any
+   };
 
 abstract class Nature {
   specs: IspecsObj | IspecsObj[];
@@ -17,14 +25,14 @@ abstract class Nature {
     return [this.specs.getKey()];
   }
 
-  abstract draw(svg?, scaleInfo?, series?): void;
-  
+  abstract draw(svg?: any, scaleInfo?: any, series?: any): void;
+  abstract handleEvent?(chartEvent: any, chartInfo: ChartInfo): void;
   // { // 
     
   //   throw new Error('Method not implemented');
   // }
 
-  getXScale(spec, chartInfo) {
+  getXScale(spec:any, chartInfo: ChartInfo) {
     if (spec.useGlobalScale === true) {
       return chartInfo.scales.xScales.x;
     }
@@ -32,7 +40,7 @@ abstract class Nature {
     return chartInfo.scales.xScales[spec.getKey()];
   }
 
-  getYScale(spec, chartInfo) {
+  getYScale(spec:any, chartInfo: ChartInfo) {
     if (spec.useGlobalScale === true) {
       return chartInfo.scales.yScales.y;
     }

@@ -8,7 +8,7 @@ import { Chart, ChartProps, ChartState } from './charting/base_chart';
 
 import { buildChartInfoObject, IChartDataObject, IScaleObject } from './charting/util/chartinfo_factory';
 
-import { ChartNatureSpec } from './charting/base_chart_config';
+import { ChartNatureSpec, ChartNatures } from './charting/base_chart_config';
 
 import Header from './components/header';
 import { strings } from './utils/strings';
@@ -18,7 +18,7 @@ import { chartdata } from './chartdata';
 import * as styles from './styles/base.scss';
 interface AppState {
   data: IChartDataObject,
-  natures: ChartNatureSpec[]
+  natures: ChartNatures[]
 }
 
 interface AppProps {
@@ -51,10 +51,10 @@ export default class App extends React.Component<AppProps, AppState> {
 
 
   buttonClicked() {
-    const newState = this.state;
+    const newState = {...this.state};
     const numbersToChange = Math.floor((Math.random() * 10) + 1);
 
-    const newData: any = {
+    const newData: IChartDataObject = {
       l1: {
         datapoints: [
           { x: 0, y: 123 },

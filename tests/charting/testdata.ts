@@ -5,8 +5,12 @@ import TrianglePointNature from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/model/point_nature';
 // import { BarNature, BarSpec } from '../../src/charting/bar_nature';
 import { AxisNature, AxisSpec } from '../../src/charting/axis_nature';
+import {IChartDataOld,IChartDataNew } from '../../src/chartdata';
 
-const testData = {
+
+
+
+const testData: IChartDataOld = {
   data: {
     l1: {
       datapoints: [

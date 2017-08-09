@@ -4,12 +4,16 @@ import DrawSpec from './model/draw_spec';
 import * as _ from 'lodash';
 
 import ChartInfo from './model/chart_info';
+
+import { IChartDataObject, IScaleObject, ISeries  } from './util/chartinfo_factory';
 class AxisNature extends Nature {
   public axis: d3.Axis<{}>;
-  public axisGroup: d3.Selection<SVGElement, {}, HTMLElement, any>;
+  public axisGroup: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>;
   public specs: IspecsObj;
+  public handleEvent(chartEvent: any, chartInfo: ChartInfo){}
 
-  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, ...rest) {
+
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, ...rest:any[]) {
     this.axisGroup = svg.append<SVGGElement>('g').attr('class', `axis-${this.specs.axisPosition}`);
   }
 
@@ -41,7 +45,7 @@ class AxisNature extends Nature {
     }
   }
 
-  setAxisScale(chartInfo) {
+  setAxisScale(chartInfo: ChartInfo) {
     switch (this.specs.axisPosition) {
       case 'top':
         this.axis.scale(this.getXScale(this.specs, chartInfo));
@@ -89,7 +93,7 @@ class AxisNature extends Nature {
     return this.specs.stroke;
   }
 
-  draw(svg?, chartInfo?, series?) {
+  draw(svg:any, chartInfo: ChartInfo, series?: any) {
     if (_.isUndefined(this.axisGroup)) {
       this.initialize(svg, chartInfo, series);
       this.createAxisFunction(chartInfo);
@@ -137,7 +141,7 @@ class AxisSpec extends DrawSpec {
   }
 
   get labelFunction() {
-    return this.getValue(this.props.labelFunction, value => value, _.isFunction);
+    return this.getValue(this.props.labelFunction, (value: any) => value, _.isFunction);
   }
 
   get tickValues() {

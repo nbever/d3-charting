@@ -13,7 +13,6 @@ import TrianglePointNature from './charting/triangle_point_nature';
 import { PointSpec } from './charting/model/point_nature';
 import { BarNature, BarSpec } from './charting/bar_nature';
 import { StackedBarNature, StackedBarSpec } from './charting/stacked_bar_nature';
-import { GroupedBarNature, GroupedBarSpec } from './charting/grouped_bar_nature';
 
 import { Chart, ChartProps, ChartState } from './charting/base_chart';
 

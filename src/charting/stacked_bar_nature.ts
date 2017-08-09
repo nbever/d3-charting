@@ -6,16 +6,17 @@ import ChartInfo from './model/chart_info';
 import * as _ from 'lodash';
 
 class StackedBarNature extends BarNature {
-  initialize(svg: d3.Selection<SVGGElement, {}, HTMLElement, any>) { // , chartInfo, series
+  initialize(svg: d3.Selection<SVGGElement, ISeries[][], HTMLElement, any>) { // , chartInfo, series
     this.barGroup = svg.append<SVGGElement>('g');
     this.barGroup.attr('class', 'stacked_bar_nature');
   }
+  handleEvent(){}
 
   private yScale: any;
   private yMin: any;
   private yMax: any;
 
-  draw(svg, chartInfo: ChartInfo, series: ISeries) {
+  draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     const stackedData = this.stackTheData(series);
     this.yScale = d3.scaleLinear()
       .domain([this.yMin, this.yMax])
@@ -25,15 +26,15 @@ class StackedBarNature extends BarNature {
     super.draw(svg, chartInfo, <any>[stackedData]);
   }
 
-  turnStackIntoDrawableSet(staks) {
-    const series = [];
+  turnStackIntoDrawableSet(staks:any) {
+    const series:any = [];
 
     this.yMin = Number.MAX_VALUE;
     this.yMax = Number.MIN_VALUE;
 
-    staks.forEach((data) => {
+    staks.forEach((data: any) => {
       const newSeries = {
-        datapoints: data.map((dp) => {
+        datapoints: data.map((dp: any) => {
           this.yMin = Math.min(this.yMin, dp[0]);
           this.yMax = Math.max(this.yMax, dp[1]);
 
@@ -47,18 +48,18 @@ class StackedBarNature extends BarNature {
     return series;
   }
 
-  stackTheData(series: ISeries) {
+  stackTheData(series: ISeries[][]) {
     const dataMap = this.buildXMap(series, this.specs[0]);
     const flatMap = this.flattenMap(dataMap);
     const stacked = d3.stack().keys(this.getKeys())(flatMap);
     return this.turnStackIntoDrawableSet(stacked);
   }
 
-  buildXMap(data, leadSpec) {
-    const map = {};
+  buildXMap(data: any, leadSpec: any) {
+    const map: any = {};
 
-    data[0].forEach((series, index) => {
-      series.datapoints.forEach((dp) => {
+    data[0].forEach((series: any, index: any) => {
+      series.datapoints.forEach((dp: any) => {
         const xVal = leadSpec.domainValue(dp);
         let record = map[xVal];
 
@@ -74,11 +75,11 @@ class StackedBarNature extends BarNature {
     return map;
   }
 
-  flattenMap(dataMap) {
-    const stackableData = [];
+  flattenMap(dataMap: any) {
+    const stackableData: any = [];
 
     for (const xKey in dataMap) {
-      const record = { x: xKey };
+      const record: any = { x: xKey };
       for (const yKey in dataMap[xKey]) {
         record[yKey] = dataMap[xKey][yKey];
       }
@@ -108,11 +109,11 @@ class StackedBarSpec extends BarSpec {
     super(props);
   }
   get domainValue() {
-    return this.getValue(this.props.domainValue, dp => dp.x, _.isFunction);
+    return this.getValue(this.props.domainValue, (dp: any) => dp.x, _.isFunction);
   }
 
   get rangeValue() {
-    return this.getValue(this.props.rangeValue, dp => dp.y, _.isFunction);
+    return this.getValue(this.props.rangeValue, (dp: any) => dp.y, _.isFunction);
   }
 }
 

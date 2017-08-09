@@ -4,49 +4,52 @@ import DrawSpec from './draw_spec';
 import ChartEvent from './chart_event';
 
 import ChartInfo from '../model/chart_info';
-import { IChartDataObject } from '../util/chartinfo_factory';
+
+import { IChartDataObject, IScaleObject, ISeries, Ixy } from '../util/chartinfo_factory';
 
 import * as _ from 'lodash';
 
 class PointNature extends Nature {
 
   public pointGroup: any;
-  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, chartInfo: ChartInfo, series: IChartDataObject) { // 
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) { // 
     this.pointGroup = svg.append('g').attr('class', `${this.getNatureName()}_nature`);
   }
 
-  buildNewShapes(chartInfo, series) {
+  handleEvent() { }
+
+  buildNewShapes(chartInfo: ChartInfo, series: ISeries[][]) {
     this.pointGroup.selectAll(`.${this.getNatureName()}_group`).remove();
 
     const points = this.pointGroup.selectAll(`.${this.getNatureName()}_nature`).data(series[0]).enter()
       .append('g')
       .attr('class', `${this.getNatureName()}_group`)
-      .attr('data-spec-index', (d, i) => i);
+      .attr('data-spec-index', (d: any, i: any) => i);
 
     const appender = points
       .selectAll(`.${this.getNatureName()}`)
-      .data(d => d.datapoints)
+      .data((d: any) => d.datapoints)
       .enter();
 
     this.drawShape(appender)
-      .on('mouseover', (d, i, nodes) => {
+      .on('mouseover', (d: any, i: any, nodes: any) => {
         const spec = this.getSpecFromChild(nodes[0]);
         chartInfo.fireEvent(new ChartEvent('mouseover', d, spec));
       })
-      .on('mouseout', (d, i, nodes) => {
+      .on('mouseout', (d: any, i: any, nodes: any) => {
         const spec = this.getSpecFromChild(nodes[0]);
         chartInfo.fireEvent(new ChartEvent('mouseout', d, spec));
       })
       .attr('class', `${this.getNatureName()}`);
   }
 
-  draw(svg, chartInfo, series) {
+  draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     if (_.isUndefined(this.pointGroup)) {
       this.initialize(svg, chartInfo, series);
     }
 
     const elmCount = this.countElements();
-    const points = series[0].reduce((total, s) => total + s.datapoints.length, 0);
+    const points = (<any[]><any>series[0]).reduce((total: any, s: any) => total + s.datapoints.length, 0);
 
     if (points !== elmCount) {
       this.buildNewShapes(chartInfo, series);
@@ -54,7 +57,7 @@ class PointNature extends Nature {
 
     const shape = this.pointGroup.selectAll(`.${this.getNatureName()}_group`)
       .data(series[0])
-      .attr('visibility', (d, i) => { // , nodes
+      .attr('visibility', (d: any, i: any) => { // , nodes
         if (this.specs[i].show === false) {
           return 'hidden';
         }
@@ -62,15 +65,15 @@ class PointNature extends Nature {
         return 'visible';
       })
       .selectAll(`.${this.getNatureName()}`)
-      .data(d => d.datapoints)
+      .data((d: any) => d.datapoints)
       .transition();
 
     this.setShapeAttrs(shape, chartInfo)
-      .attr('stroke', (d, i, nodes) => this.getSpecFromChild(nodes[0]).stroke)
-      .attr('stroke-width', (d, i, nodes) => this.getSpecFromChild(nodes[0]).strokeWidth)
-      .attr('fill', (d, i, nodes) => this.getSpecFromChild(nodes[0]).fill)
-      .attr('fill-opacity', (d, i, nodes) => this.getSpecFromChild(nodes[0]).opacity)
-      .attr('cursor', (d, i, nodes) => this.getSpecFromChild(nodes[0]).cursor);
+      .attr('stroke', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).stroke)
+      .attr('stroke-width', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).strokeWidth)
+      .attr('fill', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).fill)
+      .attr('fill-opacity', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).opacity)
+      .attr('cursor', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).cursor);
   }
 
   countElements() {
@@ -89,7 +92,7 @@ class PointNature extends Nature {
     return 'point';
   }
 
-  getSpecFromChild(child) {
+  getSpecFromChild(child: any) {
     if (_.isUndefined(child)) {
       return undefined;
     }

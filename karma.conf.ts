@@ -1,4 +1,4 @@
-module.exports = function (config) {
+module.exports = function (config: any) {
   config.set({
     basePath: '',
     frameworks: ['mocha', 'chai', 'sinon'],

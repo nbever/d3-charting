@@ -8,7 +8,11 @@ import * as styles from '../styles/base.scss';
 
 class ChartBlock extends React.Component<any, any> {
 
-  public static propTypes: {
+  public static propTypes:PropTypes.ValidationMap<{
+    title: string, 
+    data: {},
+    setVisibility: ()=>{} 
+  }>  = {
     title: PropTypes.string.isRequired,
     data: PropTypes.object,
     setVisibility: PropTypes.func,
@@ -19,10 +23,10 @@ class ChartBlock extends React.Component<any, any> {
     setVisibility: _.noop,
   };
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
 
-    const initState = {};
+    const initState: any = {};
 
     // build our dictionary
     for (const key in props.data) {
@@ -32,7 +36,7 @@ class ChartBlock extends React.Component<any, any> {
     this.state = initState;
   }
 
-  setVisibility(val, key) {
+  setVisibility(val: any, key: any) {
     const state = this.state;
     state[key] = val;
 
@@ -48,7 +52,7 @@ class ChartBlock extends React.Component<any, any> {
         <TitleToggle
           dataKey={key}
           key={key}
-          onChange={(val, localkey) => this.setVisibility(val, localkey)}
+          onChange={(val: any, localkey: any) => this.setVisibility(val, localkey)}
           selected={this.state[key]}
         >{key}
         </TitleToggle>);

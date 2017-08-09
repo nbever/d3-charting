@@ -13,7 +13,7 @@ export default class DrawSpec {
     this.getKey = () => this.props.key;
   }
 
-  getValue(value, defaultValue, typeFx: (value: any)=>boolean = _.isString) {
+  getValue(value: any, defaultValue: any, typeFx: (value: any)=>boolean = _.isString) {
     const rtn = (_.isUndefined(value) || !typeFx(value)) ? defaultValue : value;
     return rtn;
   }

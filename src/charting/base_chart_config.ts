@@ -64,6 +64,8 @@ export interface TrianglePointNatureSpec {
 export type ChartNatureSpec = LineNatureSpec | BarNatureSpec | StackedBarNatureSpec | AxisNatureSpec |
   HoverAxisNatureSpec | CirclePointNatureSpec | TrianglePointNatureSpec;
 
+export type ChartNatures = LineNature | BarNature| StackedBarNature| AxisNature| HoverAxisNature| CirclePointNature| TrianglePointNature;
+
 export interface ChartConfiguration {
   natures: ChartNatureSpec[]
 }

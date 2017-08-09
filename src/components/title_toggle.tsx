@@ -26,7 +26,7 @@ class TitleToggle extends React.Component<any, any> {
     return (
       <div className={styles.titleToggle}>
         <Checkbox selected={this.props.selected}
-          onClick={newVal => this.props.onChange(newVal, this.props.dataKey)} />
+          onClick={(newVal: any) => this.props.onChange(newVal, this.props.dataKey)} />
         <div className={styles.toggleText}>{this.props.children}</div>
       </div>
     );

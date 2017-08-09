@@ -9,20 +9,20 @@ class CirclePointNature extends PointNature {
     return 'dot';
   }
 
-  drawShape(appender) {
+  drawShape(appender: any) {
     return appender.append('circle');
   }
 
-  setShapeAttrs(shape, chartInfo: ChartInfo) {
-    return shape.attr('cx', (d, i, nodes) => {
+  setShapeAttrs(shape: any, chartInfo: ChartInfo) {
+    return shape.attr('cx', (d: any, i: any, nodes: any) => {
       const spec = this.getSpecFromChild(nodes[0]);
       return this.getXScale(spec, chartInfo)(d.x);
     })
-      .attr('cy', (d, i, nodes) => {
+      .attr('cy', (d: any, i: any, nodes: any) => {
         const spec = this.getSpecFromChild(nodes[0]);
         return this.getYScale(spec, chartInfo)(d.y);
       })
-      .attr('r', (d, i, nodes) => this.getSpecFromChild(nodes[0]).radius);
+      .attr('r', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).radius);
   }
 
   countElements() {

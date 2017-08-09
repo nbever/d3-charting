@@ -2,7 +2,7 @@ import { AxisNature, AxisSpec } from './axis_nature';
 
 import * as _ from 'lodash';
 
-import { IChartDataObject, IScaleObject } from './util/chartinfo_factory';
+import { IChartDataObject, IScaleObject, ISeries  } from './util/chartinfo_factory';
 import ChartInfo from './model/chart_info';
 
 class HoverAxisNature extends AxisNature {
@@ -11,18 +11,17 @@ class HoverAxisNature extends AxisNature {
   private hoverSpec: any;
   private seriesKey: any;
 
-
-  initialize(svg: d3.Selection<SVGElement, {}, HTMLElement, any>, chartInfo: ChartInfo) {
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo) {
     this.axisGroup = svg.append<SVGGElement>('g');
     this.axisGroup.attr('class', `hover-axis-${this.specs.axisPosition}`);
   }
 
-  draw(svg, chartInfo: ChartInfo, series:IChartDataObject) {
+  draw(svg: any, chartInfo: ChartInfo, series:IChartDataObject) {
     // do nothing
     this.svg = svg;
   }
 
-  handleEvent(chartEvent, chartInfo) {
+  handleEvent(chartEvent: any, chartInfo: ChartInfo) {
     if (chartEvent.eventType === 'mouseover') {
       this.showAxis(chartInfo, chartEvent.drawSpec);
     } else if (chartEvent.eventType === 'mouseout') {
@@ -30,7 +29,7 @@ class HoverAxisNature extends AxisNature {
     }
   }
 
-  getYScale(spec, chartInfo) {
+  getYScale(spec: any, chartInfo: ChartInfo) {
     if (this.useGlobalScale === true) {
       return chartInfo.scales.yScales.y;
     }
@@ -38,7 +37,7 @@ class HoverAxisNature extends AxisNature {
     return chartInfo.scales.yScales[this.seriesKey];
   }
 
-  getXScale(spec, chartInfo) {
+  getXScale(spec: any, chartInfo: ChartInfo) {
     if (this.useGlobalScale === true) {
       return chartInfo.scales.xScales.x;
     }
@@ -54,7 +53,7 @@ class HoverAxisNature extends AxisNature {
     return this.specs.stroke;
   }
 
-  showAxis(chartInfo, spec) {
+  showAxis(chartInfo: ChartInfo, spec : any) {
     if (_.isUndefined(this.axisGroup)) {
       this.initialize(this.svg, chartInfo);
     }

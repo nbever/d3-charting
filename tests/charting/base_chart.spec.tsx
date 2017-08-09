@@ -19,7 +19,6 @@ describe('base chart react component', () => {
     document.getElementsByTagName('body')[0].appendChild(iDiv);
   });
 
-
   it('renders something', () => {
     render(<Chart domainPadding={5} padding={8} rangePadding={0} data={testData.data} natures={testData.natures} />, document.getElementById('mychart'));
     expect(document.getElementsByClassName('axis-bottom')).not.to.be.empty;

@@ -13,7 +13,7 @@ export default class ChartInfo {
 
   constructor(xRange: IRange, yRange: IRange,
     scales: IScalesContainer,
-    eventHandler,
+    eventHandler : ()=>{},
     padding = 0) {
     this.xRangeBF = xRange;
     this.yRangeBF = yRange;

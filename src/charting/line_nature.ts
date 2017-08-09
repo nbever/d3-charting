@@ -4,23 +4,25 @@ import DrawSpec from './model/draw_spec';
 
 import * as _ from 'lodash';
 
+import ChartInfo from './model/chart_info';
 class LineNature extends Nature {
   private lineGroup: any;
+  handleEvent() { }
 
-  initialize(svg, chartInfo, series) {
+  initialize(svg: any, chartInfo: ChartInfo, series: any) {
     this.lineGroup = svg.append('g').attr('class', 'line_nature');
     const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
       .append('g')
       .attr('class', 'line_nature_path_group');
     lines.append('path')
       .attr('class', 'line_nature_path')
-      .attr('d', (d, i) => this.getLineMethod(this.specs[i], chartInfo)(d.datapoints))
-      .attr('stroke', (d, i) => this.specs[i].color)
-      .attr('stroke-width', (d, i) => this.specs[i].thickness)
+      .attr('d', (d: any, i: any) => this.getLineMethod(this.specs[i], chartInfo)(d.datapoints))
+      .attr('stroke', (d: any, i: any) => this.specs[i].color)
+      .attr('stroke-width', (d: any, i: any) => this.specs[i].thickness)
       .attr('fill', 'none');
   }
 
-  draw(svg, chartInfo, series) {
+  draw(svg: any, chartInfo: ChartInfo, series: any) {
     if (_.isUndefined(this.lineGroup)) {
       this.initialize(svg, chartInfo, series);
     }
@@ -28,8 +30,8 @@ class LineNature extends Nature {
     this.lineGroup.selectAll('.line_nature_path')
       .data(series[0])
       .transition()
-      .attr('d', (d, i) => {
-        if (this.specs[i].show === false) {
+      .attr('d', (d: any, i: any) => {
+        if ((<any>this.specs)[i].show === false) {
           return () => { };
         }
 
@@ -37,7 +39,7 @@ class LineNature extends Nature {
       });
   }
 
-  getLineMethod(spec, chartInfo) {
+  getLineMethod(spec: any, chartInfo: ChartInfo) {
     return d3.line()
       .x(d => this.getXScale(spec, chartInfo)((<any>d).x))
       .y(d => this.getYScale(spec, chartInfo)((<any>d).y));

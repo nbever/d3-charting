@@ -8,12 +8,12 @@ import ChartInfo from './model/chart_info';
 import { ChartNatureSpec, ChartNatures } from './base_chart_config';
 
 import * as styles from '../styles/base.scss';
-
+import { convertConfig } from './convert_config';
 
 export interface ChartProps {
   padding: number,
   data: IChartDataObject,
-  natures: ChartNatures[],
+  natures: ChartNatureSpec[],
   domainPadding: number,
   rangePadding: number,
 };
@@ -23,19 +23,20 @@ export interface ChartState {
   chartInfo?: ChartInfo,
   padding?: number,
   data?: object,
-  natures?: ChartNatures[],
+  natures?: ChartNatureSpec[],
   domainPadding?: number,
   rangePadding?: number,
 };
 
 export class Chart extends React.Component<ChartProps, ChartState>  {
   public state: ChartState = {
-      svg: undefined,
-    };
+    svg: undefined,
+  };
   private root: any;
   private xRangeBF: [number];
   private yRangeBF: [number];
   private chartInfoBF: ChartInfo;
+  private oldnatures:  ChartNatures[] ;
 
   public static propTypes: PropTypes.ValidationMap<ChartProps> = {
     padding: PropTypes.number,
@@ -54,6 +55,8 @@ export class Chart extends React.Component<ChartProps, ChartState>  {
 
   constructor(public props: ChartProps) {
     super(props);
+    this.oldnatures = convertConfig({ natures: this.props.natures });
+    
   }
 
   componentWillMount() {
@@ -90,16 +93,17 @@ export class Chart extends React.Component<ChartProps, ChartState>  {
     this.drawNatures(svg, chartInfo, this.props.data);
   }
 
-  drawNatures(svg:any, chartInfo: ChartInfo, data: any) {
-    if (_.isUndefined(this.props.natures)) {
+  drawNatures(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, data: any) {
+    if (_.isUndefined(this.oldnatures)) {
       return;
     }
 
-    this.props.natures.forEach((n: any) => {
+    this.oldnatures.forEach((n) => {
       const natureData = [];
-      natureData.push(n.getKeys().map((k: any) => data[k]));
-      //debugger     
+      natureData.push(n.getKeys().map((k) => data[k]));
+      //debugger 
       n.draw(svg, chartInfo, natureData);
+
     });
   }
 
@@ -115,7 +119,9 @@ export class Chart extends React.Component<ChartProps, ChartState>  {
 
   resizeChart() {
     const chartInfo = this.buildScales();
-    this.drawNatures(this.state.svg, chartInfo, this.props.data);
+    if (this.state.svg !== undefined) {
+      this.drawNatures(this.state.svg, chartInfo, this.props.data);
+    }
   }
 
   get xRange() {
@@ -143,7 +149,7 @@ export class Chart extends React.Component<ChartProps, ChartState>  {
   }
 
   eventHandler(chartEvent: d3.BaseEvent) {
-    this.props.natures.forEach((n: any) => {
+    this.oldnatures.forEach((n: any) => {
       if (_.isFunction(n.handleEvent)) {
         n.handleEvent(chartEvent, this.chartInfo);
       }

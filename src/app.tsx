@@ -15,10 +15,12 @@ import { strings } from './utils/strings';
 
 import { chartdata } from './chartdata';
 
+import { chartdataNew } from './chartdata_new';
+
 import * as styles from './styles/base.scss';
 interface AppState {
   data: IChartDataObject,
-  natures: ChartNatures[]
+  natures: ChartNatureSpec[]
 }
 
 interface AppProps {
@@ -28,7 +30,7 @@ export default class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
 
-    this.state = chartdata;
+    this.state = chartdataNew;
   }
 
   setVisibility(val: any, key: any) {

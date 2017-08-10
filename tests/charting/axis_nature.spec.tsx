@@ -29,7 +29,7 @@ describe('AxisNature', () => {
       [0, 1000], 20,
       [0, 1000], 10,
       () => { });
-    an.draw(createSvgElement('body', '1000px', '300px'), chartInfo, [[null]]);
+    an.draw(createSvgElement('body', '1000px', '300px'), chartInfo, [[]]);
     expect(document.getElementsByClassName('axis-bottom')).not.to.be.empty;
     expect(document.getElementsByClassName('tick').length).to.equal(5);
     expect(document.getElementsByTagName('text').length).to.equal(5);

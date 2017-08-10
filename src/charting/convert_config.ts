@@ -1,6 +1,6 @@
 
 import * as _ from 'lodash';
-import { ChartConfiguration, ChartNatureSpec, ChartNatures } from './base_chart_config';
+import { ChartConfiguration, ChartNatureSpec, ChartNatures, ChartSpecs } from './base_chart_config';
 import { LineNature } from '../charting/line_nature';
 import { BarNature } from '../charting/bar_nature';
 import { StackedBarNature } from '../charting/stacked_bar_nature';
@@ -10,26 +10,59 @@ import CirclePointNature from '../charting/circle_point_nature';
 import TrianglePointNature from '../charting/triangle_point_nature';
 
 
-export const convertConfig = (src: ChartConfiguration) => {
+
+
+
+import { LineSpec } from '../charting/line_nature';
+import { BarSpec } from '../charting/bar_nature';
+import { AxisSpec } from '../charting/axis_nature';
+import { PointSpec } from '../charting/point_nature';
+import { StackedBarSpec } from '../charting/stacked_bar_nature';
+
+
+
+export const convertConfig: (src: ChartConfiguration) => ChartNatures[] = (src: ChartConfiguration) => {
   const dest0 = _.map(src.natures, (nature) => {
-    return ({
-      ...nature,
-      ctor: nature.nature === 'line' ? LineNature :
-        nature.nature === 'bar' ? BarNature :
-          nature.nature === 'stackedBar' ? StackedBarNature :
-            nature.nature === 'axis' ? AxisNature :
-              nature.nature === 'hoverAxis' ? HoverAxisNature :
-                nature.nature === 'circlePoint' ? CirclePointNature :
-                  nature.nature === 'trianglePoint' ? TrianglePointNature : 
-                  () => { throw new Error('invalid nature provided') }
-    })
+    let tempNctor: any = LineNature;
+     if (nature.nature === 'line') {
+      // tempNctor = <ChartNatures><any>LineNature;
+      tempNctor = LineNature;
+      
+    }
+    else if (nature.nature === 'bar') {
+      tempNctor = BarNature;
+      
+    }
+    else if (nature.nature === 'stackedBar') {
+      tempNctor = StackedBarNature;
+      
+    }
+    else if (nature.nature === 'axis') {
+      tempNctor = AxisNature;
+      
+    }
+    else if (nature.nature === 'hoverAxis') {
+      tempNctor = HoverAxisNature;
+      
+    }
+    else if (nature.nature === 'circlePoint') {
+      tempNctor = CirclePointNature;
+      
+    }
+    else if (nature.nature === 'trianglePoint') {
+      tempNctor = TrianglePointNature;
+      
+    }
+
+    return ({ ...nature, Nctor: tempNctor});
+
   });
 
-  const dest = _.map(dest0, (d: any) => {
-    return _.map(d.specs, (spec: any) => {
-      return new d.ctor(spec)
+  const dest: ChartNatures[] =
+    _.map(dest0, (d) => {
+        return (new d.Nctor(d.specs));
+      
     });
-  });
 
   return dest;
 }

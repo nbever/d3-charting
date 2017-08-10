@@ -5,12 +5,12 @@ import TrianglePointNature from '../../src/charting/triangle_point_nature';
 import { PointSpec } from '../../src/charting/point_nature';
 // import { BarNature, BarSpec } from '../../src/charting/bar_nature';
 import { AxisNature, AxisSpec } from '../../src/charting/axis_nature';
-import {IChartDataOld,IChartDataNew } from '../../src/chartdata';
+import { IChartDataOld, IChartDataNew } from '../../src/chartdata';
 
 
 
 
-const testData: IChartDataOld = {
+const testData: IChartDataNew = {
   data: {
     l1: {
       datapoints: [
@@ -40,25 +40,42 @@ const testData: IChartDataOld = {
       ],
     },
   },
-  natures: [
-    new LineNature([
-      new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 }),
-    ]),
-    new CirclePointNature([
-      new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
-    ]),
-    new TrianglePointNature([
-      new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
-    ]),
-    new HoverAxisNature(new AxisSpec({ key: '',
-      position: 'left',
-      ticks: 1,
-      useGlobalScale: false,
-      tickValues: AxisSpec.MAX_ONLY,
-      strokeDashArray: '8,4',
-      labelFunction: tick => parseInt(tick, 10).toFixed(2) })),
-    new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })),
-  ],
+  natures: [{
+    nature: 'line',
+    specs: [
+      new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 })
+    ]
+  },
+  // {
+  //   nature: 'circlePoint',
+  //   specs: [
+  //     new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
+  //   ]
+  // }, {
+  //   nature: 'trianglePoint',
+  //   specs: [
+  //     new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
+  //   ]
+  // },
+  // {
+  //   nature: 'hoverAxis',
+  //   specs: [new AxisSpec({
+  //     key: '',
+  //     position: 'left',
+  //     ticks: 1,
+  //     useGlobalScale: false,
+  //     tickValues: AxisSpec.MAX_ONLY,
+  //     strokeDashArray: '8,4',
+  //     labelFunction: tick => parseInt(tick, 10).toFixed(2)
+  //   })
+  //   ]
+  // }, {
+  //   nature: 'axis',
+  //   specs: [
+  //     new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })
+  //   ]
+  // }
+  ]
 };
 export default testData;
 

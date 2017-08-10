@@ -1,5 +1,5 @@
 
-import { PointNature } from './model/point_nature';
+import { PointNature } from './point_nature';
 
 import ChartInfo from './model/chart_info';
 

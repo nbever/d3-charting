@@ -1,4 +1,4 @@
-import { Nature } from './model/nature';
+import { Nature , IspecsObj} from './model/nature';
 import DrawSpec from './model/draw_spec';
 import ChartEvent from './model/chart_event';
 
@@ -171,7 +171,7 @@ export interface BarSpecInitProps{
           };
 
 
-class BarSpec extends DrawSpec {
+class BarSpec extends DrawSpec implements IspecsObj {
 
   constructor(props: BarSpecInitProps){
     super(props);

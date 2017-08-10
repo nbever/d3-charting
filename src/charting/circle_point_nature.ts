@@ -1,6 +1,5 @@
-// import * as d3 from 'd3';
-// import Nature from './model/point_nature';
-import { PointNature } from './model/point_nature';
+
+import { PointNature } from './point_nature';
 
 import ChartInfo  from './model/chart_info';
 

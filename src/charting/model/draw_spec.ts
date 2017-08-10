@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 
 export default class DrawSpec {
-  private getKey: any;
+  public getKey: any;
 
   constructor(public props: any) {
     if (_.isUndefined(props.key)) {

@@ -4,7 +4,7 @@ import { AxisSpec, AxisNature } from './charting/axis_nature';
 import { HoverAxisNature } from './charting/hover_axis_nature';
 import CirclePointNature from './charting/circle_point_nature';
 import TrianglePointNature from './charting/triangle_point_nature';
-import { PointSpec } from './charting/model/point_nature';
+import { PointSpec } from './charting/point_nature';
 import { BarNature, BarSpec } from './charting/bar_nature';
 import { StackedBarNature, StackedBarSpec } from './charting/stacked_bar_nature';
 

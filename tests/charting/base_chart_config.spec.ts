@@ -5,7 +5,7 @@ import { ChartConfiguration } from '../../src/charting/base_chart_config';
 import { LineSpec } from '../../src/charting/line_nature';
 import { BarSpec } from '../../src/charting/bar_nature';
 import { AxisSpec } from '../../src/charting/axis_nature';
-import { PointSpec } from '../../src/charting/model/point_nature';
+import { PointSpec } from '../../src/charting/point_nature';
 import { StackedBarSpec } from '../../src/charting/stacked_bar_nature';
 
 
@@ -48,9 +48,9 @@ describe('config object types work', () => {
     const t1 = <ChartConfiguration>{};
     t1.natures = [{
       nature: 'axis',
-      specs: [new AxisSpec({
+      specs: new AxisSpec({
         key: 'l1'
-      })]
+      })
     }];
     expect(true).to.equal(true);
   });

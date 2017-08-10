@@ -1,15 +1,17 @@
 import * as d3 from 'd3';
-import { Nature } from './model/nature';
+import { Nature , IspecsObj} from './model/nature';
 import DrawSpec from './model/draw_spec';
 
 import * as _ from 'lodash';
 
+
+import { IChartDataObject, IScaleObject, ISeries, Ixy } from './util/chartinfo_factory';
 import ChartInfo from './model/chart_info';
 class LineNature extends Nature {
   private lineGroup: any;
   handleEvent() { }
 
-  initialize(svg: any, chartInfo: ChartInfo, series: any) {
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: any) {
     this.lineGroup = svg.append('g').attr('class', 'line_nature');
     const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
       .append('g')
@@ -22,7 +24,7 @@ class LineNature extends Nature {
       .attr('fill', 'none');
   }
 
-  draw(svg: any, chartInfo: ChartInfo, series: any) {
+  draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     if (_.isUndefined(this.lineGroup)) {
       this.initialize(svg, chartInfo, series);
     }
@@ -52,7 +54,7 @@ export interface LineSpecInitProps {
   thickness?: number
 };
 
-class LineSpec extends DrawSpec {
+class LineSpec extends DrawSpec implements IspecsObj {
 
   constructor(props: LineSpecInitProps) {
     super(props);

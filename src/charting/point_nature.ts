@@ -1,11 +1,10 @@
 
-import { Nature } from './nature';
-import DrawSpec from './draw_spec';
-import ChartEvent from './chart_event';
+import { Nature } from './model/nature';
+import DrawSpec from './model/draw_spec';
+import ChartEvent from './model/chart_event';
+import ChartInfo from './model/chart_info';
 
-import ChartInfo from '../model/chart_info';
-
-import { IChartDataObject, IScaleObject, ISeries, Ixy } from '../util/chartinfo_factory';
+import { IChartDataObject, IScaleObject, ISeries, Ixy } from './util/chartinfo_factory';
 
 import * as _ from 'lodash';
 

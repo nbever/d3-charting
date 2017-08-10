@@ -4,12 +4,11 @@ import DrawSpec from './model/draw_spec';
 import * as _ from 'lodash';
 
 import ChartInfo from './model/chart_info';
-
 import { IChartDataObject, IScaleObject, ISeries  } from './util/chartinfo_factory';
 class AxisNature extends Nature {
   public axis: d3.Axis<{}>;
   public axisGroup: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>;
-  public specs: IspecsObj;
+  public specs: AxisSpec;
   public handleEvent(chartEvent: any, chartInfo: ChartInfo){}
 
 
@@ -93,7 +92,7 @@ class AxisNature extends Nature {
     return this.specs.stroke;
   }
 
-  draw(svg:any, chartInfo: ChartInfo, series?: any) {
+  draw(svg:d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     if (_.isUndefined(this.axisGroup)) {
       this.initialize(svg, chartInfo, series);
       this.createAxisFunction(chartInfo);
@@ -116,10 +115,11 @@ export interface AxisSpecInitProp {
   tickSizeOuter?: number 
 };
 
-class AxisSpec extends DrawSpec {
+class AxisSpec extends DrawSpec implements IspecsObj {
   static MAX_ONLY = 'MAX_ONLY';
   static positionTypes = ['top', 'bottom', 'left', 'right'];
-
+  
+ 
   constructor(props: AxisSpecInitProp) {
     super(props);
   }

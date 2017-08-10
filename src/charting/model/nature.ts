@@ -27,10 +27,6 @@ abstract class Nature {
 
   abstract draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]): void;
   abstract handleEvent?(chartEvent: any, chartInfo: ChartInfo): void;
-  // { // 
-    
-  //   throw new Error('Method not implemented');
-  // }
 
   getXScale(spec:any, chartInfo: ChartInfo) {
     if (spec.useGlobalScale === true) {

@@ -46,17 +46,17 @@ const testData: IChartDataNew = {
       new LineSpec({ key: 'l1', color: 'green', thickness: 2.0 })
     ]
   },
-  // {
-  //   nature: 'circlePoint',
-  //   specs: [
-  //     new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
-  //   ]
-  // }, {
-  //   nature: 'trianglePoint',
-  //   specs: [
-  //     new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
-  //   ]
-  // },
+  {
+    nature: 'circlePoint',
+    specs: [
+      new PointSpec({ key: 'l1', stroke: 'red', fill: 'blue', radius: 10, opacity: 0.3, cursor: 'pointer' }),
+    ]
+  }, {
+    nature: 'trianglePoint',
+    specs: [
+      new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
+    ]
+  },
   // {
   //   nature: 'hoverAxis',
   //   specs: [new AxisSpec({

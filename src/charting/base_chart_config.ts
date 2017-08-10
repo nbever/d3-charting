@@ -1,10 +1,8 @@
-
 import { LineSpec } from '../charting/line_nature';
 import { BarSpec } from '../charting/bar_nature';
 import { AxisSpec } from '../charting/axis_nature';
 import { PointSpec } from '../charting/point_nature';
 import { StackedBarSpec } from '../charting/stacked_bar_nature';
-
 
 import { LineNature } from '../charting/line_nature';
 import { BarNature } from '../charting/bar_nature';
@@ -13,12 +11,6 @@ import { AxisNature } from '../charting/axis_nature';
 import { HoverAxisNature } from '../charting/hover_axis_nature';
 import CirclePointNature from '../charting/circle_point_nature';
 import TrianglePointNature from '../charting/triangle_point_nature';
-
-
-
-// type Natures = LineNature | BarNature | StackedBarNature |
-//   AxisNature | HoverAxisNature |
-//   CirclePointNature | TrianglePointNature;
 
 export interface LineNatureSpec {
   nature: 'line';

@@ -8,8 +8,6 @@ import { AxisNature, AxisSpec } from '../../src/charting/axis_nature';
 import { IChartDataOld, IChartDataNew } from '../../src/chartdata';
 
 
-
-
 const testData: IChartDataNew = {
   data: {
     l1: {
@@ -57,24 +55,24 @@ const testData: IChartDataNew = {
       new PointSpec({ key: 'l1', stroke: 'green', fill: 'darkgray', radius: 3, cursor: 'pointer' }),
     ]
   },
-  // {
-  //   nature: 'hoverAxis',
-  //   specs: [new AxisSpec({
-  //     key: '',
-  //     position: 'left',
-  //     ticks: 1,
-  //     useGlobalScale: false,
-  //     tickValues: AxisSpec.MAX_ONLY,
-  //     strokeDashArray: '8,4',
-  //     labelFunction: tick => parseInt(tick, 10).toFixed(2)
-  //   })
-  //   ]
-  // }, {
-  //   nature: 'axis',
-  //   specs: [
-  //     new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })
-  //   ]
-  // }
+  {
+    nature: 'hoverAxis',
+    specs: new AxisSpec({
+      key: '',
+      position: 'left',
+      ticks: 1,
+      useGlobalScale: false,
+      tickValues: AxisSpec.MAX_ONLY,
+      strokeDashArray: '8,4',
+      labelFunction: tick => parseInt(tick, 10).toFixed(2)
+    })
+    
+  }, {
+    nature: 'axis',
+    specs: 
+      new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 })
+    
+  }
   ]
 };
 export default testData;

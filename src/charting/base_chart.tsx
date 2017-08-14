@@ -98,11 +98,11 @@ export class Chart extends React.Component<ChartProps, ChartState>  {
       return;
     }
 
-    this.oldnatures.forEach((n) => {
+    this.oldnatures.forEach((n:ChartNatures) => {
       const natureData = [];
-      natureData.push(n.getKeys().map((k) => data[k]));
+      natureData.push(n.getKeys().map((k:any) => data[k]));
       //debugger 
-      n.draw(svg, chartInfo, natureData);
+      (n as any).draw( svg, chartInfo, natureData);
 
     });
   }

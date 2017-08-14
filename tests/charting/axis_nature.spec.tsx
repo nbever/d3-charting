@@ -12,7 +12,7 @@ const expect = chai.expect;
 
 describe('AxisNature', () => {
   it('can be newed', () => {
-    const an = new AxisNature();
+    const an = new AxisNature(new AxisSpec({ key: '', position: 'bottom', ticks: 4, tickSizeOuter: 0 }));
     expect(an).not.to.be.empty;
   });
 

@@ -1,47 +1,40 @@
-
 import * as _ from 'lodash';
 
 import { IChartDataObject, IScaleObject, ISeries, Ixy } from '../util/chartinfo_factory';
+import {ChartSpecs} from '../base_chart_config'
+import ChartInfo from './chart_info';
+export interface IspecsObj {
+  [key: string]: any,
+  [index: number]: any,
+  getKey: any
+};
 
-import ChartInfo  from './chart_info';
- interface IspecsObj { 
-   [key: string]: any ,
-   [index: number]: any ,   
-   getKey:any
-   };
-
-abstract class Nature {
-  specs: IspecsObj | IspecsObj[];
-
-  constructor(specs?:any) {
-    this.specs = specs;
+export abstract class Nature {
+  constructor(public specs: IspecsObj | IspecsObj[]) {
   }
 
+  abstract draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: [IChartDataObject] | ISeries[][]): void;
+  abstract handleEvent?(chartEvent: any, chartInfo: ChartInfo): void;
+
   getKeys() {
-    if ( this.specs instanceof Array ) {
+    if (this.specs instanceof Array) {
       return this.specs.map(p => p.getKey());
     }
-
     return [this.specs.getKey()];
   }
 
-  abstract draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]): void;
-  abstract handleEvent?(chartEvent: any, chartInfo: ChartInfo): void;
 
-  getXScale(spec:any, chartInfo: ChartInfo) {
-    if (spec.useGlobalScale === true) {
+  getXScale(spec: ChartSpecs, chartInfo: ChartInfo) {
+    if (spec.useGlobalScale ) {
       return chartInfo.scales.xScales.x;
     }
-
     return chartInfo.scales.xScales[spec.getKey()];
   }
 
-  getYScale(spec:any, chartInfo: ChartInfo) {
-    if (spec.useGlobalScale === true) {
+  getYScale(spec: ChartSpecs, chartInfo: ChartInfo) {
+    if (spec.useGlobalScale ) {
       return chartInfo.scales.yScales.y;
     }
-
     return chartInfo.scales.yScales[spec.getKey()];
   }
 }
-export {IspecsObj, Nature};

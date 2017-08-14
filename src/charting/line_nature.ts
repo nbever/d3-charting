@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-import { Nature , IspecsObj} from './model/nature';
-import DrawSpec from './model/draw_spec';
+import { Nature, IspecsObj } from './model/nature';
+import {DrawSpec, ISpecInitProp} from './model/draw_spec';
 
 import * as _ from 'lodash';
 
@@ -11,7 +11,11 @@ class LineNature extends Nature {
   private lineGroup: any;
   handleEvent() { }
 
-  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: any) {
+  constructor(public specs: LineSpec[]) {
+    super(specs)
+  }
+
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     this.lineGroup = svg.append('g').attr('class', 'line_nature');
     const lines = this.lineGroup.selectAll('.line_nature_path').data(series[0]).enter()
       .append('g')
@@ -48,13 +52,13 @@ class LineNature extends Nature {
   }
 }
 
-export interface LineSpecInitProps {
+export interface LineSpecInitProps extends ISpecInitProp{
   key: string,
   color?: string,
   thickness?: number
 };
 
-class LineSpec extends DrawSpec implements IspecsObj {
+class LineSpec extends DrawSpec<LineSpecInitProps> implements IspecsObj {
 
   constructor(props: LineSpecInitProps) {
     super(props);

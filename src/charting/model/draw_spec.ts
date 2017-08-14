@@ -2,10 +2,19 @@
 import * as _ from 'lodash';
 
 
-export default class DrawSpec {
-  public getKey: any;
+export interface ISpecInitProp{
+  key: string,
+  show?: boolean,
+  useGlobalScale?: boolean,
+  cursor? : string
 
-  constructor(public props: any) {
+}
+
+
+export class DrawSpec <TInitProp extends ISpecInitProp> {
+  public getKey: ()=> string;
+
+  constructor(public props: TInitProp ) {
     if (_.isUndefined(props.key)) {
       throw new Error('No key property was defined');
     }

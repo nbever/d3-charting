@@ -1,5 +1,5 @@
-import { Nature , IspecsObj} from './model/nature';
-import DrawSpec from './model/draw_spec';
+import { Nature, IspecsObj } from './model/nature';
+import { DrawSpec, ISpecInitProp } from './model/draw_spec';
 import ChartEvent from './model/chart_event';
 
 import { IChartDataObject, IScaleObject, ISeries, Ixy } from './util/chartinfo_factory';
@@ -7,9 +7,9 @@ import ChartInfo from './model/chart_info';
 
 import * as _ from 'lodash';
 
-class BarNature extends Nature {
+export class BarNature extends Nature {
   public barGroup: d3.Selection<SVGGElement, ISeries[][], HTMLElement, any>;
-  public handleEvent(){}
+  public handleEvent() { }
 
   initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>,
     chartInfo: ChartInfo,
@@ -62,7 +62,7 @@ class BarNature extends Nature {
 
     this.barGroup.selectAll('.bar_group')
       .data<ISeries>(series[0])
-      .attr('visibility', (d : any, i: any) => { // , nodes
+      .attr('visibility', (d: any, i: any) => { // , nodes
         if ((<any>this.specs)[i].show === false) {
           return 'hidden';
         }
@@ -85,10 +85,10 @@ class BarNature extends Nature {
       .selectAll('.bar-outline')
       .data((d: any) => d.datapoints)
       .transition()
-      .attr('points', (d:any, i:any, nodes:any) => this.buildLine(d, i, nodes, maxBarWidth, chartInfo))
-      .attr('stroke-width', (d:any, i:any, nodes:any) => this.getSpecFromChild(nodes[0]).strokeWidth)
+      .attr('points', (d: any, i: any, nodes: any) => this.buildLine(d, i, nodes, maxBarWidth, chartInfo))
+      .attr('stroke-width', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).strokeWidth)
       .attr('fill', 'none')
-      .attr('stroke', (d:any, i:any, nodes:any) => this.getSpecFromChild(nodes[0]).stroke);
+      .attr('stroke', (d: any, i: any, nodes: any) => this.getSpecFromChild(nodes[0]).stroke);
   }
 
   buildLine(data: any, index: any, nodes: any, maxBarWidth: any, chartInfo: ChartInfo) {
@@ -159,21 +159,23 @@ class BarNature extends Nature {
   }
 }
 
-export interface BarSpecInitProps{
-            key: string,
-            strokeWidth?: number,
-            stroke?: string,
-            fill?: string,
-            opacity?: number,
-            barWidth?: number,
-            useGlobalScale?: boolean,
-            cursor?: string
-          };
+export interface BarSpecInitProps extends ISpecInitProp {
+  key: string,
+  strokeWidth?: number,
+  stroke?: string,
+  strokeOpacity?: number,
+  fill?: string,
+  opacity?: number,
+  barWidth?: number,
+  useGlobalScale?: boolean,
+  cursor?: string
+};
 
 
-class BarSpec extends DrawSpec implements IspecsObj {
 
-  constructor(props: BarSpecInitProps){
+export class BarSpec<T extends BarSpecInitProps> extends DrawSpec<T> implements IspecsObj {
+
+  constructor(props: T) {
     super(props);
 
   }
@@ -203,4 +205,3 @@ class BarSpec extends DrawSpec implements IspecsObj {
   }
 }
 
-export { BarNature, BarSpec };

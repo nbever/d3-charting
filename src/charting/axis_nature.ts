@@ -1,18 +1,18 @@
 import * as d3 from 'd3';
 import { Nature, IspecsObj } from './model/nature';
-import DrawSpec from './model/draw_spec';
+import {DrawSpec, ISpecInitProp} from './model/draw_spec';
 import * as _ from 'lodash';
 
 import ChartInfo from './model/chart_info';
-import { IChartDataObject, IScaleObject, ISeries  } from './util/chartinfo_factory';
-class AxisNature extends Nature {
+import { IChartDataObject, IScaleObject, ISeries } from './util/chartinfo_factory';
+export class AxisNature extends Nature {
   public axis: d3.Axis<{}>;
   public axisGroup: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>;
   public specs: AxisSpec;
-  public handleEvent(chartEvent: any, chartInfo: ChartInfo){}
+  public handleEvent(chartEvent: any, chartInfo: ChartInfo) { }
 
 
-  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, ...rest:any[]) {
+  initialize(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, ...rest: any[]) {
     this.axisGroup = svg.append<SVGGElement>('g').attr('class', `axis-${this.specs.axisPosition}`);
   }
 
@@ -92,7 +92,7 @@ class AxisNature extends Nature {
     return this.specs.stroke;
   }
 
-  draw(svg:d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
+  draw(svg: d3.Selection<SVGElement, ISeries[][], HTMLElement, any>, chartInfo: ChartInfo, series: ISeries[][]) {
     if (_.isUndefined(this.axisGroup)) {
       this.initialize(svg, chartInfo, series);
       this.createAxisFunction(chartInfo);
@@ -104,22 +104,23 @@ class AxisNature extends Nature {
   }
 }
 
-export interface AxisSpecInitProp {
+export interface AxisSpecInitProp extends ISpecInitProp {
   key: string,
   position?: string,
   ticks?: number,
   useGlobalScale?: boolean,
-  tickValues?: string,
+  tickValues?: any,
   strokeDashArray?: string,
+  stroke?: string,
   labelFunction?: (tick: string) => string,
-  tickSizeOuter?: number 
+  tickSizeOuter?: number
 };
 
-class AxisSpec extends DrawSpec implements IspecsObj {
+export class AxisSpec extends DrawSpec <AxisSpecInitProp>  implements IspecsObj {
   static MAX_ONLY = 'MAX_ONLY';
   static positionTypes = ['top', 'bottom', 'left', 'right'];
-  
- 
+
+
   constructor(props: AxisSpecInitProp) {
     super(props);
   }
@@ -159,5 +160,3 @@ class AxisSpec extends DrawSpec implements IspecsObj {
     return this.getValue(this.props.position, 'bottom', _.isString);
   }
 }
-
-export { AxisNature, AxisSpec };

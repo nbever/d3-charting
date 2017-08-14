@@ -2,6 +2,8 @@ import * as d3 from 'd3';
 import { BarNature, BarSpec } from './bar_nature';
 
 import { IChartDataObject, IScaleObject, ISeries } from './util/chartinfo_factory';
+
+import {DrawSpec, ISpecInitProp} from './model/draw_spec';
 import ChartInfo from './model/chart_info';
 import * as _ from 'lodash';
 
@@ -94,16 +96,18 @@ class StackedBarNature extends BarNature {
     return this.yScale;
   }
 }
-export interface StackedBarSpecInitProps {
+export interface StackedBarSpecInitProps  extends ISpecInitProp{
   key: string,
   strokeWidth?: number,
   stroke?: string,
   fill?: string,
   opacity?: number,
   barWidth?: number,
-  cursor?: string
+  cursor?: string,
+  domainValue?: number,
+  rangeValue?: number
 }
-class StackedBarSpec extends BarSpec {
+class StackedBarSpec extends BarSpec<StackedBarSpecInitProps> {
 
   constructor(props: StackedBarSpecInitProps) {
     super(props);

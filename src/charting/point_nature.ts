@@ -1,6 +1,6 @@
 
 import { Nature } from './model/nature';
-import DrawSpec from './model/draw_spec';
+import {DrawSpec, ISpecInitProp} from './model/draw_spec';
 import ChartEvent from './model/chart_event';
 import ChartInfo from './model/chart_info';
 
@@ -99,16 +99,17 @@ class PointNature extends Nature {
     return this.specs[parseInt(child.parentNode.getAttribute('data-spec-index'), 10)];
   }
 }
-export interface PointSpecInitProp {
+export interface PointSpecInitProp extends ISpecInitProp{
   key: string, 
   stroke?: string, 
   fill?: string, 
   radius?: number, 
   cursor?: string,
-  opacity?: number
+  opacity?: number,
+  strokeWidth? : number
 };
 
-class PointSpec extends DrawSpec {
+class PointSpec extends DrawSpec <PointSpecInitProp> {
 
   constructor(props: PointSpecInitProp) {
     super(props);

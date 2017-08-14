@@ -1,4 +1,3 @@
-
 import { expect } from 'chai';
 
 import { ChartConfiguration } from '../../src/charting/base_chart_config';
@@ -8,10 +7,8 @@ import { AxisSpec } from '../../src/charting/axis_nature';
 import { PointSpec } from '../../src/charting/point_nature';
 import { StackedBarSpec } from '../../src/charting/stacked_bar_nature';
 
-
-
-// please note that these test dont really have to run, they are analysed by the type checker 
-// and if there are no build errors or the expected build errors 
+// please note that these test are analysed by the type checker 
+// and if there are no build errors or only the expected build errors 
 // they can be considered passing
 
 describe('config object types work', () => {
